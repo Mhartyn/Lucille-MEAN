@@ -1,3 +1,5 @@
+import login from './routes/login';
+import controller from './routes/grupo';
 import express = require('express');
 import path = require('path');
 import bodyParser = require('body-parser');
@@ -5,12 +7,12 @@ import bodyParser = require('body-parser');
 export default class Server{
     public app: express.Application;
     public port: number;
-
+    
     constructor(puerto: number){
         this.port = puerto;
         this.app = express();
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.json());        
     }
 
     static init (puerto: number){
@@ -24,6 +26,8 @@ export default class Server{
 
     start(callback: (...args: any[]) => void){
         this.app.listen(this.port, callback);
+        this.app.use(login);
+        this.app.use(controller);
         this.publicFolder();
     }    
 }
