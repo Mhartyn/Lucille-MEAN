@@ -1,12 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
 
 const UsuarioSchema: Schema = new Schema({
-  email: { type: String, required:  [true, 'El email es requerido'], unique: [true, 'El email debe ser unico'] },
-  nombre: { type: String, required: [true, 'El nombre es requerido'], unique: true },
+  email: { type: String, required:  [true, 'El email es requerido'], unique: true },
+  nombre: { type: String, required: [true, 'El nombre es requerido'] },
   descripcion: { type: String, required: [true, 'El descripcion es requerido'] },
-  estado: { type: Boolean, required: true, default: true },
-  UsuarioCreacion: { type: mongoose.Types.ObjectId, ref: "Usuario", required: false },
-  FechaCreacion: { type: Boolean, required: false },
+  activo: { type: Boolean, required: true, default: true },
+  UsuarioCreacion: { type: mongoose.Types.ObjectId, ref: "Usuario", required: true },
+  FechaCreacion: { type: Boolean, required: true, default: Date.now },
   UsuarioModificacion: { type: mongoose.Types.ObjectId, ref: "Usuario", required: false },
   FechaModificacion: { type: Boolean, required: false }
 });
