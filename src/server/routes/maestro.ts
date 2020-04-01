@@ -18,7 +18,7 @@ maestroController.get('/maestro/:nombre?', [ verificaToken ], (req: Request, res
     repo.consultar(nombre, orden, pagina, tamanio).then((respuesta: any) => {
         res.json({
             ok: true,
-            message: `nombre ${nombre}`,
+            message: '',
             respuesta
         });
 
