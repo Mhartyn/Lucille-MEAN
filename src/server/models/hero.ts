@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+/* import mongoose from 'mongoose';
 
 export let Schema = mongoose.Schema;
 export let ObjectId = mongoose.Schema.Types.ObjectId;
@@ -226,4 +226,4 @@ HeroModel.createHero('Steve', 'Flying').then((res: any) => {
     console.log(err.message);
     console.log(err);
   }
-});
+}); */

@@ -2,10 +2,10 @@ import {Router, Request, Response} from 'express';
 import { verificaToken } from '../middelware/autenticacion';
 import Grupo from '../models/grupo';
 
-const controller = Router();
+const grupoController = Router();
 
 //listar grupos
-controller.get('/maestros/grupos/:nombre', [ verificaToken ], (req: Request, res: Response) => {
+grupoController.get('/maestros/grupos/:nombre', [ verificaToken ], (req: Request, res: Response) => {
     let nombre = req.params.nombre;
     let regEx = new RegExp(nombre, 'i');
 
@@ -60,7 +60,7 @@ controller.get('/maestros/grupos/:nombre', [ verificaToken ], (req: Request, res
 });
 
 //consultar grupos
-controller.get('/maestros/grupo/:id', [ verificaToken ], (req: Request, res: Response) => {
+grupoController.get('/maestros/grupo/:id', [ verificaToken ], (req: Request, res: Response) => {
     const id = req.params.id;
 
     Grupo.find({id})
@@ -83,7 +83,7 @@ controller.get('/maestros/grupo/:id', [ verificaToken ], (req: Request, res: Res
 });
 
 //crear grupos
-controller.post('/maestros/grupo', verificaToken, (req: Request, res: Response) => {
+grupoController.post('/maestros/grupo', verificaToken, (req: Request, res: Response) => {
     let {nombre, descripcion} = req.body;
 
     let grupo = new Grupo({
@@ -115,7 +115,7 @@ controller.post('/maestros/grupo', verificaToken, (req: Request, res: Response) 
 });
 
 //modifica grupo
-controller.put('/maestros/grupo/:id', verificaToken, (req: Request, res: Response) => {
+grupoController.put('/maestros/grupo/:id', verificaToken, (req: Request, res: Response) => {
     let id = req.params.id;
     let {nombre, descripcion} = req.body;
 
@@ -141,7 +141,7 @@ controller.put('/maestros/grupo/:id', verificaToken, (req: Request, res: Respons
 });
 
 //elimina un grupo
-controller.delete('/maestros/grupo/:id', [verificaToken/* , verificaAdmin_Role */], (req: Request, res: Response) => {
+grupoController.delete('/maestros/grupo/:id', [verificaToken/* , verificaAdmin_Role */], (req: Request, res: Response) => {
     let id = req.params.id;
     
     Grupo.findOneAndUpdate({_id: id}, { activo: false }, {
@@ -162,4 +162,4 @@ controller.delete('/maestros/grupo/:id', [verificaToken/* , verificaAdmin_Role *
     });
 }); 
 
-export default controller;
+export default grupoController;

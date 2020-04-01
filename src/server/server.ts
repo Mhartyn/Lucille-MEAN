@@ -1,5 +1,6 @@
 import login from './routes/login';
-import controller from './routes/grupo';
+import grupoController from './routes/grupo';
+import maestroController from './routes/maestro';
 import express = require('express');
 import path = require('path');
 import bodyParser = require('body-parser');
@@ -27,7 +28,8 @@ export default class Server{
     start(callback: (...args: any[]) => void){
         this.app.listen(this.port, callback);
         this.app.use(login);
-        this.app.use(controller);
+        this.app.use(grupoController);
+        this.app.use(maestroController);
         this.publicFolder();
     }    
 }
