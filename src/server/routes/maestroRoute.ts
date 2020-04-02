@@ -1,21 +1,23 @@
 import {Router, Request, Response} from 'express';
 import { verificaToken } from '../middelware/autenticacion';
-import { MaestroRepository } from '../repositorio/maestro';
-import { IMaestroModel } from '../models/interfaces/maestro';
-import Maestro from '../repositorio/schema/Maestro';
+import { MaestroRepositorio } from '../repositorio/maestroRepositorio';
+import { IMaestroModel } from '../modelo/interfaces/maestro';
+import Maestro from '../modelo/maestroModelo';
 
-const maestroController = Router();
+const maestroRoute = Router();
 
 //listar maestro, filtrado por nombre, el nombre es opcional, ordenado y paginado
-maestroController.get('/maestro/:nombre?', [ verificaToken ], (req: Request, res: Response) => {
+maestroRoute.get('/maestro/:nombre?', [ verificaToken ], (req: Request, res: Response) => {
     let nombre = req.params.nombre;    
-    let {pagina, tamanio, orden} = req.query;
+    let {pagina, tamanio, orden, direccion} = req.query;
     
     pagina = Number(pagina);
     tamanio = Number(tamanio);
-    let repo = new MaestroRepository();
+    direccion = Number(direccion);
 
-    repo.consultar(nombre, orden, pagina, tamanio).then((respuesta: any) => {
+    let repo = new MaestroRepositorio();
+
+    repo.consultar(nombre, orden, direccion, pagina, tamanio).then((respuesta: any) => {
         res.json({
             ok: true,
             message: '',
@@ -31,10 +33,10 @@ maestroController.get('/maestro/:nombre?', [ verificaToken ], (req: Request, res
     });
 
 //consultar por id maestro
-maestroController.get('/maestro/:id', [ verificaToken ], (req: Request, res: Response) => {
+maestroRoute.get('/maestro/:id', [ verificaToken ], (req: Request, res: Response) => {
     const id = req.params.id;
 
-    let repo = new MaestroRepository();
+    let repo = new MaestroRepositorio();
     repo.obtener(id).then((maestro: IMaestroModel) => {
             res.json({
                 ok: true,
@@ -49,7 +51,7 @@ maestroController.get('/maestro/:id', [ verificaToken ], (req: Request, res: Res
 });
 
 //crear maestro
-maestroController.post('/maestro', verificaToken, (req: Request, res: Response) => {
+maestroRoute.post('/maestro', verificaToken, (req: Request, res: Response) => {
     let {nombre, descripcion} = req.body;
 
     let maestro = new Maestro({
@@ -58,7 +60,7 @@ maestroController.post('/maestro', verificaToken, (req: Request, res: Response) 
         //usuario: req.usuario._id
     });
 
-    let repo = new MaestroRepository();
+    let repo = new MaestroRepositorio();
 
     repo.crear(<IMaestroModel>maestro).then((respuesta: any) => {    
         res.json({
@@ -74,11 +76,11 @@ maestroController.post('/maestro', verificaToken, (req: Request, res: Response) 
 });
 
 //modifica maestro
-maestroController.put('/maestro/:id', verificaToken, (req: Request, res: Response) => {
+maestroRoute.put('/maestro/:id', verificaToken, (req: Request, res: Response) => {
     let id = req.params.id;
     let {nombre, descripcion} = req.body;
 
-    let repo = new MaestroRepository();
+    let repo = new MaestroRepositorio();
     repo.modificar(<IMaestroModel>{
         _id: id,
         nombre, 
@@ -97,10 +99,10 @@ maestroController.put('/maestro/:id', verificaToken, (req: Request, res: Respons
 });
 
 //elimina un maestro
-maestroController.delete('/maestro/:id', [verificaToken/* , verificaAdmin_Role */], (req: Request, res: Response) => {
+maestroRoute.delete('/maestro/:id', [verificaToken/* , verificaAdmin_Role */], (req: Request, res: Response) => {
     let id = req.params.id;
     
-    let repo = new MaestroRepository();
+    let repo = new MaestroRepositorio();
     repo.eliminar(id).then((respuesta: any) => {    
         res.json({
             ok: true,
@@ -114,4 +116,4 @@ maestroController.delete('/maestro/:id', [verificaToken/* , verificaAdmin_Role *
     });
 }); 
 
-export default maestroController;
+export default maestroRoute;

@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'express';
 import { verificaToken } from '../middelware/autenticacion';
-import Grupo from '../models/grupo';
+import Grupo from '../modelo/grupo';
 
 const grupoController = Router();
 

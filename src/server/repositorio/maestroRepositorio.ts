@@ -1,9 +1,9 @@
-import { IMaestroModel } from '../models/interfaces/maestro';
+import { IMaestroModel } from '../modelo/interfaces/maestro';
 import { RepositoryBase } from './generico/base';
-import MaestroSchema from './schema/Maestro';
+import MaestroSchema from '../modelo/maestroModelo';
 import { utils } from '../utlis';
 
-export class MaestroRepository extends RepositoryBase<IMaestroModel> {
+export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
     constructor() {
       super(MaestroSchema);
     }
@@ -57,14 +57,14 @@ export class MaestroRepository extends RepositoryBase<IMaestroModel> {
       return <Promise<IMaestroModel>>p;      
     }
 
-    public consultar(nombre: string, sort: string, pagina: number, tamanio: number) : Promise<IMaestroModel> {
+    public consultar(nombre: string, sort: string, direccion: number, pagina: number, tamanio: number) : Promise<IMaestroModel> {
       let p = new Promise((resolve, reject) => {
         let regEx = new RegExp(nombre, 'i');
         
         let desde = pagina === 1 ? 0 : (pagina - 1) * tamanio;    
         let criterio = { nombre : regEx };
         this.find(criterio)
-            .sort(sort).skip(desde).limit(tamanio) //orden y paginacion
+            .sort([[sort, direccion]]).skip(desde).limit(tamanio) //orden y paginacion
             .exec((err: Error, res: any) => {
           if (err) {
             reject(err);

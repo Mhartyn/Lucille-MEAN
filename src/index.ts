@@ -1,10 +1,13 @@
 import Server from './server/server';
 import mongoose from 'mongoose';
+import { Inicial } from './server/config/inicial';
 
-let port = <number>(process.env.PORT || 3000);
+Inicial.init();
+
+let port: number = <number>(process.env.PORT);
 const server = Server.init(port);   
 
-mongoose.connect('mongodb://localhost:27017/presupuesto', {
+mongoose.connect(process.env.URLDB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
