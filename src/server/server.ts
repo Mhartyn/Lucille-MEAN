@@ -1,6 +1,7 @@
-import login from './routes/login';
-import grupoController from './routes/grupo';
-import maestroRoute from './routes/maestroRoute';
+import loginRouter from './rutas/loginRouter';
+import grupoController from './rutas/grupo';
+import maestroRouter from './rutas/maestroRouter';
+import usuarioRouter from './rutas/usuarioRouter';
 import express = require('express');
 import path = require('path');
 import bodyParser = require('body-parser');
@@ -27,9 +28,10 @@ export default class Server{
 
     start(callback: (...args: any[]) => void){
         this.app.listen(this.port, callback);
-        this.app.use(login);
+        this.app.use(loginRouter);
         this.app.use(grupoController);
-        this.app.use(maestroRoute);
+        this.app.use(maestroRouter);
+        this.app.use(usuarioRouter);
         this.publicFolder();
     }    
 }

@@ -4,6 +4,7 @@ declare namespace NodeJS {
       NODE_ENV: string;
       CADUCIDAD_TOKEN: string;
       SEED: string;
+      SEGURIDAD: string;
       MONGO_URI: string;
       URLDB: string;
       CLIENT_ID: string;

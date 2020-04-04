@@ -1,15 +1,15 @@
-import { IMaestroModel } from '../modelo/interfaces/iMaestroModel';
+import { IUsuarioModel } from '../modelo/interfaces/iUsuarioModel';
 import { RepositoryBase } from './generico/base';
-import MaestroSchema from '../modelo/maestroModelo';
+import UsuarioSchema from '../modelo/usuarioModelo';
 import { utils } from '../utlis';
 import { IConsultaModel } from '../modelo/interfaces/iConsulta';
 
-export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
+export class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
     constructor() {
-      super(MaestroSchema);
+      super(UsuarioSchema);
     }
 
-    public crear(item: IMaestroModel) : Promise<IMaestroModel> {
+    public crear(item: IUsuarioModel) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {        
   
         this.create(item, (err: Error, res: any) => {
@@ -21,10 +21,10 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
           }
         });            
       });      
-      return <Promise<IMaestroModel>>p;      
+      return <Promise<IUsuarioModel>>p;      
     }
 
-    public modificar(item: IMaestroModel) : Promise<IMaestroModel> {
+    public modificar(item: IUsuarioModel) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {        
   
         this.update(item._id, item, (err: Error, res: any) => {
@@ -33,17 +33,17 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
           }
           else {            
             if (res.ok) {
-              this.findById(item._id, (err: Error, db: IMaestroModel)=>{
+              this.findById(item._id, (err: Error, db: IUsuarioModel)=>{
                 resolve(db);
               });              
             }
           }
         });            
       });      
-      return <Promise<IMaestroModel>>p;      
+      return <Promise<IUsuarioModel>>p;      
     }
 
-    public eliminar(id: string) : Promise<IMaestroModel> {
+    public eliminar(id: string) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {        
   
         this.delete(id, (err: Error, res: any) => {
@@ -55,12 +55,17 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
           }
         });            
       });      
-      return <Promise<IMaestroModel>>p;      
+      return <Promise<IUsuarioModel>>p;      
     }
 
-    public eliminarLogico(item: IMaestroModel) : Promise<IMaestroModel> {
+    public eliminarLogico(id: string) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {        
-                
+  
+        let item = <IUsuarioModel>{
+          _id: id,
+          eliminado: true,                  
+        };
+        console.log('llego aqui');
         this.update(item._id, item, (err: Error, res: any) => {
           if (err) {
             reject(err);
@@ -70,19 +75,19 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
           }
         });            
       });      
-      return <Promise<IMaestroModel>>p;      
+      return <Promise<IUsuarioModel>>p;      
     }
 
-    public consultar(criterio: IConsultaModel<IMaestroModel>) : Promise<IMaestroModel> {
+    public consultar(criterio: IConsultaModel<IUsuarioModel>) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {
         let regEx = new RegExp(criterio.item.nombre, 'i');
         
         let desde = criterio.pagina === 1 ? 0 : (criterio.pagina - 1) * criterio.tamanio;    
-        let _criterio = { nombre: regEx, tipo: criterio.item.tipo, eliminado: criterio.item.eliminado };
+        let _criterio = { nombre: regEx, eliminado: criterio.item.eliminado };
         this.find(_criterio)
             .sort([[criterio.orden, criterio.direccion]])
             .skip(desde)
-            .limit(criterio.tamanio) //orden y paginacion
+            .limit(criterio.tamanio) //orden y paginacion            
             .exec((err: Error, res: any) => {
           if (err) {
             reject(err);
@@ -107,17 +112,18 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
                 }
               }
             });
+
           }
         });
       });
       
-      return <Promise<IMaestroModel>>p;
+      return <Promise<IUsuarioModel>>p;
     }
 
-    public obtener(item: IMaestroModel) : Promise<IMaestroModel> {
+    public obtener(id: string) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {
         
-        this.findOne(item, (err: Error, res: IMaestroModel) => {
+        this.findById(id, (err: Error, res: IUsuarioModel) => {
           if (err) {
             reject(err);
           }
@@ -134,6 +140,6 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
         });
       });
       
-      return <Promise<IMaestroModel>>p;
+      return <Promise<IUsuarioModel>>p;
     }
   }

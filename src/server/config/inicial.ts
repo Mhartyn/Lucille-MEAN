@@ -21,6 +21,10 @@ export class Inicial{
       //==========================
       process.env.SEED = process.env.SEED || 'B498437D-F3C4-4A36-A51F-AD82B48BF247';
   
+      //==========================
+      //Nombre token
+      //==========================
+      process.env.SEGURIDAD = 'auth'; 
   
       //==========================
       // Base de Datos
