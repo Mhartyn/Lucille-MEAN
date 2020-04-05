@@ -29,7 +29,7 @@ export default class Server{
     start(callback: (...args: any[]) => void){
         this.app.listen(this.port, callback);
         this.app.use(loginRouter);
-        this.app.use(grupoController);
+        //this.app.use(grupoController);
         this.app.use(maestroRouter);
         this.app.use(usuarioRouter);
         this.publicFolder();

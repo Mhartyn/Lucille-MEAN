@@ -1,10 +1,11 @@
-import { IMaestroModel } from '../modelo/interfaces/iMaestroModel';
-import { RepositoryBase } from './generico/base';
+import IMaestroModel  from '../modelo/interfaces/iMaestroModel';
+import RepositoryBase from './generico/base';
 import MaestroSchema from '../modelo/maestroModelo';
-import { utils } from '../utlis';
-import { IConsultaModel } from '../modelo/interfaces/iConsulta';
+import utils from '../utlis';
+import IConsultaModel from '../modelo/interfaces/genericos/iConsulta';
+import RespuestaPaginada from '../modelo/interfaces/genericos/iRespuestaPaginada';
 
-export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
+export default class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
     constructor() {
       super(MaestroSchema);
     }
@@ -77,12 +78,12 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
       let p = new Promise((resolve, reject) => {
         let regEx = new RegExp(criterio.item.nombre, 'i');
         
-        let desde = criterio.pagina === 1 ? 0 : (criterio.pagina - 1) * criterio.tamanio;    
+        let desde = criterio.desde();    
         let _criterio = { nombre: regEx, tipo: criterio.item.tipo, eliminado: criterio.item.eliminado };
         this.find(_criterio)
-            .sort([[criterio.orden, criterio.direccion]])
-            .skip(desde)
-            .limit(criterio.tamanio) //orden y paginacion
+            .sort([[criterio.orden, criterio.direccion]]) // orden y direccion
+            .skip(desde) //paginacion, desde donde
+            .limit(criterio.tamanio) // paginacion, hasta donde
             .exec((err: Error, res: any) => {
           if (err) {
             reject(err);
@@ -94,16 +95,10 @@ export class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
               }
               else {
                 if (res.length) {
-                  resolve({
-                    items: res,
-                    pagina: criterio.pagina,
-                    tamanioPagina: criterio.tamanio,
-                    totalItems: total,
-                    totalPaginas: utils.numeroPaginas(total, criterio.tamanio)
-                  });
+                  resolve(new RespuestaPaginada(criterio, res, total));
                 }
                 else {
-                  resolve(null);
+                  resolve(new RespuestaPaginada(criterio, null, 0));
                 }
               }
             });

@@ -24,7 +24,17 @@ export class Inicial{
       //==========================
       //Nombre token
       //==========================
-      process.env.SEGURIDAD = 'auth'; 
+      process.env.TOKEN_INICIAL = 'auth';
+
+      //==========================
+      //Nombre token de respuesta
+      //==========================
+      process.env.TOKEN_REGRESO = 'token';
+      
+      //==========================
+      //Nombre token de respuesta
+      //==========================
+      process.env.VUELTAS_CLAVE = 256;
   
       //==========================
       // Base de Datos

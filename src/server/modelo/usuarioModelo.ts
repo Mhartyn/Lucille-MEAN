@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
-import { IMaestroModel } from './interfaces/iMaestroModel';
+import IMaestroModel from './interfaces/iMaestroModel';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
-import { IUsuarioModel } from './interfaces/iUsuarioModel';
+import IUsuarioModel from './interfaces/iUsuarioModel';
 
 let ObjectId = mongoose.Schema.Types.ObjectId;
 

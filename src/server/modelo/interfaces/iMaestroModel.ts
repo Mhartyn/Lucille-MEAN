@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { IBaseModel } from './iBase';
+import IBaseModel from './genericos/iBase';
 
-export interface IMaestroModel extends IBaseModel, mongoose.Document {
+export default interface IMaestroModel extends IBaseModel, mongoose.Document {
   nombre: string;
   descripcion: string; 
   tipo: string;  

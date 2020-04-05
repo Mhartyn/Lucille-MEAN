@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
 export const verificaToken = (req: Request, res: Response, next: NextFunction) => {
-    const token = <string>req.headers[process.env.SEGURIDAD];
+    const token = <string>req.headers[process.env.TOKEN_INICIAL];
 
     let usuarioSesion;
   

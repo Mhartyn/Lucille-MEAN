@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { IRead, IWrite } from './interfaces';
 
-export class RepositoryBase<T extends mongoose.Document> implements IRead<T>, IWrite<T> {
+export default class RepositoryBase<T extends mongoose.Document> implements IRead<T>, IWrite<T> {
 
     private _model: mongoose.Model<mongoose.Document>;
   

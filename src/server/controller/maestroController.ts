@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { MaestroRepositorio } from '../repositorio/maestroRepositorio';
-import { IMaestroModel } from '../modelo/interfaces/iMaestroModel';
-import { IConsultaModel } from '../modelo/interfaces/iConsulta';
+import MaestroRepositorio from '../repositorio/maestroRepositorio';
+import IMaestroModel from '../modelo/interfaces/iMaestroModel';
+import ConsultaModel from '../modelo/interfaces/genericos/iConsulta';
+import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
 
 class MaestroController{
     static listar = async (req: Request, res: Response) => {
@@ -14,30 +15,13 @@ class MaestroController{
             eliminado: false
         };
 
-        let criterio = <IConsultaModel<IMaestroModel>>{
-            item: item,
-            orden: String(orden),
-            direccion: Number(direccion),
-            pagina: Number(pagina),
-            tamanio: Number(tamanio),
-        }
+        let criterio = new ConsultaModel<IMaestroModel>(item,orden,Number(direccion),Number(pagina),Number(tamanio));
+        let repo = new MaestroRepositorio();
         
-        let repo = new MaestroRepositorio();    
-        let newToken = res.getHeader('token');            
-
-
         repo.consultar(criterio).then((respuesta: any) => {
-            res.json({
-                ok: true,
-                message: '',
-                respuesta,
-                token: newToken
-            });
-    
+            res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            if (err) {
-              console.log(err.message);
-            }
+            res.json(new Respuesta('Error al listar', err));
         });
     }
 
@@ -53,19 +37,10 @@ class MaestroController{
         });
 
         let repo = new MaestroRepositorio();
-        repo.obtener(item).then((maestro: IMaestroModel) => {
-                res.json({
-                    ok: true,
-                    message: 'maestro',
-                    maestro
-                });
+        repo.obtener(item).then((respuesta: IMaestroModel) => {
+            res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                if (err) {
-                  res.json({
-                      ok:false,
-                      err
-                  });
-                }
+                res.json(new Respuesta('Error al consultar', err));
               });
     }
 
@@ -84,15 +59,9 @@ class MaestroController{
         let repo = new MaestroRepositorio();
     
         repo.crear(<IMaestroModel>maestro).then((respuesta: any) => {    
-            res.json({
-                ok: true,
-                Item: respuesta
-            });
+            res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json({
-                ok:false,
-                message: err
-            });
+            res.json(new Respuesta('Error al crear', err));
         });
     }
 
@@ -110,15 +79,9 @@ class MaestroController{
             tipo: tipo,
             usuarioModificacion: usuario
         }).then((respuesta: any) => {    
-            res.json({
-                ok: true,
-                Item: respuesta
-            });
+            res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json({
-                ok:false,
-                message: err
-            });
+            res.json(new Respuesta('Error al modificar', err));
         });
     }
 
@@ -138,30 +101,16 @@ class MaestroController{
         
         if (logico) {
             repo.eliminarLogico(item).then((respuesta: any) => {    
-                res.json({
-                    ok: true,
-                    message: 'Eliminado correctamente.',
-                    respuesta
-                });
+                res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                res.json({
-                    ok:false,
-                    message: err
-                });
+                res.json(new Respuesta('Error al eliminar', err));
             });
         }
         else{
             repo.eliminar(id).then((respuesta: any) => {    
-                res.json({
-                    ok: true,
-                    message: 'Eliminado correctamente.',
-                    respuesta
-                });
+                res.json(new Respuesta('', {respuesta: 'Eliminado correctamente.'}, res));
             }, (err: Error) => {
-                res.json({
-                    ok:false,
-                    message: err
-                });
+                res.json(new Respuesta('Error al eliminar', err));
             });
         }
     }

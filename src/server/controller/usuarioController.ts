@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { UsuarioRepositorio } from '../repositorio/usuarioRepositorio';
-import { IUsuarioModel } from '../modelo/interfaces/iUsuarioModel';
+import UsuarioRepositorio from '../repositorio/usuarioRepositorio';
+import IUsuarioModel from '../modelo/interfaces/iUsuarioModel';
 import bcrypt from 'bcrypt'
-import { IConsultaModel } from '../modelo/interfaces/iConsulta';
+import ConsultaModel from '../modelo/interfaces/genericos/iConsulta';
+import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
 
 class UsuarioController{
     static listar = async (req: Request, res: Response) => {
@@ -14,30 +15,13 @@ class UsuarioController{
             eliminado: false
         };
 
-        let criterio = <IConsultaModel<IUsuarioModel>>{
-            item: item,
-            orden: String(orden),
-            direccion: Number(direccion),
-            pagina: Number(pagina),
-            tamanio: Number(tamanio),
-        }
-    
+        let criterio = new ConsultaModel<IUsuarioModel>(item,orden,Number(direccion),Number(pagina),Number(tamanio));    
         let repo = new UsuarioRepositorio();
-    
-        let newToken = res.getHeader('token');
         
         repo.consultar(criterio).then((respuesta: any) => {
-            res.json({
-                ok: true,
-                message: '',
-                respuesta,
-                token: newToken
-            });
-    
+            res.json(new Respuesta('', respuesta, res));            
         }, (err: Error) => {
-            if (err) {
-              console.log(err.message);
-            }
+            res.json(new Respuesta('Error al listar', err));
         });
     }
 
@@ -45,43 +29,30 @@ class UsuarioController{
         const id = req.params.id;
     
         let repo = new UsuarioRepositorio();
-        repo.obtener(id).then((usuario: IUsuarioModel) => {
-                res.json({
-                    ok: true,
-                    message: 'usuario',
-                    usuario
-                });
+        repo.obtener(id).then((respuesta: IUsuarioModel) => {
+            res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                if (err) {
-                  console.log(err.message);
-                }
-              });
+                res.json(new Respuesta('Error al consultar', err));
+            });
     }
 
     static crear = async (req: Request, res: Response) => {
         let {nombre, email, password, rol} = req.body;
-    
         let usuario = <IUsuarioModel>({
             nombre: nombre,
             email: email,
-            password: await bcrypt.hash(password, 256),
+            password: await bcrypt.hash(password, Number(process.env.VUELTAS_CLAVE)),
             rol: rol,
-            google: false
-            //usuario: req.usuario._id
+            google: false,
+            //usuarioCreacion: res.locals.UsuarioSession.usuario
         });
     
         let repo = new UsuarioRepositorio();
     
         repo.crear(<IUsuarioModel>usuario).then((respuesta: any) => {    
-            res.json({
-                ok: true,
-                Item: respuesta
-            });
+            res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json({
-                ok:false,
-                message: err
-            });
+            res.json(new Respuesta('Error al crear', err));
         });
     }
 
@@ -94,18 +65,12 @@ class UsuarioController{
             _id: id,
             nombre: nombre,
             email: email,
-            password: await bcrypt.hash(password, 256),
+            password: await bcrypt.hash(password, process.env.VUELTAS_CLAVE),
             rol: rol            
         }).then((respuesta: any) => {    
-            res.json({
-                ok: true,
-                Item: respuesta
-            });
+            res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json({
-                ok:false,
-                message: err
-            });
+            res.json(new Respuesta('Error al modificar', err));
         });
     }
 
@@ -117,30 +82,16 @@ class UsuarioController{
         
         if (logico) {
             repo.eliminarLogico(id).then((respuesta: any) => {    
-                res.json({
-                    ok: true,
-                    message: 'Eliminado correctamente.',
-                    respuesta
-                });
+                res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                res.json({
-                    ok:false,
-                    message: err
-                });
+                res.json(new Respuesta('Error al eliminar', err));
             });
         }
         else{
             repo.eliminar(id).then((respuesta: any) => {    
-                res.json({
-                    ok: true,
-                    message: 'Eliminado correctamente.',
-                    respuesta
-                });
+                res.json(new Respuesta('', {respuesta: 'Se elimino correctamente.'}, res));
             }, (err: Error) => {
-                res.json({
-                    ok:false,
-                    message: err
-                });
+                res.json(new Respuesta('', err));
             });
         }
     }

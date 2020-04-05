@@ -1,10 +1,10 @@
-import { IUsuarioModel } from '../modelo/interfaces/iUsuarioModel';
-import { RepositoryBase } from './generico/base';
+import IUsuarioModel from '../modelo/interfaces/iUsuarioModel';
+import RepositoryBase from './generico/base';
 import UsuarioSchema from '../modelo/usuarioModelo';
-import { utils } from '../utlis';
-import { IConsultaModel } from '../modelo/interfaces/iConsulta';
+import IConsultaModel from '../modelo/interfaces/genericos/iConsulta';
+import RespuestaPaginada from '../modelo/interfaces/genericos/iRespuestaPaginada';
 
-export class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
+export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
     constructor() {
       super(UsuarioSchema);
     }
@@ -82,7 +82,7 @@ export class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {
         let regEx = new RegExp(criterio.item.nombre, 'i');
         
-        let desde = criterio.pagina === 1 ? 0 : (criterio.pagina - 1) * criterio.tamanio;    
+        let desde = criterio.desde();    
         let _criterio = { nombre: regEx, eliminado: criterio.item.eliminado };
         this.find(_criterio)
             .sort([[criterio.orden, criterio.direccion]])
@@ -92,34 +92,27 @@ export class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           if (err) {
             reject(err);
           }
-          else {
+          else {            
             this.count(_criterio, (err: Error, total: number)=>{
-              if (err) {
-                reject(err);
-              }
-              else {
-                if (res.length) {
-                  resolve({
-                    items: res,
-                    pagina: criterio.pagina,
-                    tamanioPagina: criterio.tamanio,
-                    totalItems: total,
-                    totalPaginas: utils.numeroPaginas(total, criterio.tamanio)
-                  });
+                if (err) {
+                  reject(err);
                 }
-                else {
-                  resolve(null);
+                else {                
+                  if (res.length) {
+                    resolve(new RespuestaPaginada(criterio, res, total));
+                  }
+                  else{
+                    resolve(new RespuestaPaginada(criterio, null, 0));
+                  }
                 }
-              }
-            });
-
+            });                        
           }
         });
       });
       
       return <Promise<IUsuarioModel>>p;
     }
-
+    
     public obtener(id: string) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {
         

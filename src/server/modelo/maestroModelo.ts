@@ -1,5 +1,5 @@
   import mongoose, { Schema } from 'mongoose';
-  import { IMaestroModel } from './interfaces/iMaestroModel';
+  import IMaestroModel from './interfaces/iMaestroModel';
   import mongooseUniqueValidator from 'mongoose-unique-validator';
   
   let ObjectId = mongoose.Schema.Types.ObjectId;
