@@ -31,6 +31,14 @@ const UsuarioSchema: Schema = new Schema<IUsuarioModel>({
    return this;
  });
 
+UsuarioSchema.methods.toJSON = function() {
+  let user = this;
+
+  let userObject = user.toObject();
+  delete userObject.password;
+  return userObject;
+}
+
 UsuarioSchema.plugin(mongooseUniqueValidator, { message: '{PATH} debe ser unico' });
 
 export default mongoose.model<IMaestroModel>('usuario', UsuarioSchema, 'usuario', true);

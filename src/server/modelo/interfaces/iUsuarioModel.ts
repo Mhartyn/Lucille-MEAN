@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
 import IBaseModel from './genericos/iBase';
 
-export default interface IUsuarioModel extends IBaseModel, mongoose.Document {
+export default interface IUsuarioModel extends IBaseModel {
   nombre: string;
   email: string;
   password: string;  

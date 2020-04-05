@@ -14,7 +14,7 @@ export default class ConsultaModel<T> implements IConsultaModel<T>{
     pagina: number; 
     tamanio: number;
 
-    constructor(item: T, orden: string, direccion: number, pagina: number, tamanio: number){
+    constructor(item: T, pagina: number, orden: string, direccion: number, tamanio: number){
         this.item = item;
         this.orden = orden; 
         this.direccion = direccion; 

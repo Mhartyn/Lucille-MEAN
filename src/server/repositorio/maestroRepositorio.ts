@@ -1,7 +1,6 @@
 import IMaestroModel  from '../modelo/interfaces/iMaestroModel';
 import RepositoryBase from './generico/base';
 import MaestroSchema from '../modelo/maestroModelo';
-import utils from '../utlis';
 import IConsultaModel from '../modelo/interfaces/genericos/iConsulta';
 import RespuestaPaginada from '../modelo/interfaces/genericos/iRespuestaPaginada';
 
