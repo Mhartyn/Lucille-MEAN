@@ -67,7 +67,7 @@ class MaestroController{
         let {eliminado, id} = req.params;
         let {nombre, descripcion} = req.body;
         
-        let usuario = <IMaestroModel>res.locals.usuarioSesion;
+        let usuario = <IUsuarioModel>res.locals.usuarioSesion;
 
         let repo = new MaestroRepositorio();
         repo.modificar(<IMaestroModel>{
@@ -75,7 +75,8 @@ class MaestroController{
             nombre, 
             descripcion,            
             eliminado: Boolean(eliminado),
-            usuarioModificacion: usuario._id
+            usuarioModificacion: usuario._id,
+            fechaModificacion: new Date()
         }).then((respuesta: any) => {    
             res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
@@ -87,12 +88,13 @@ class MaestroController{
         let logico = req.params.logico;        
         let {tipo, id} = req.params;
 
-        let usuario = <IMaestroModel>res.locals.usuarioSesion;
+        let usuario = <IUsuarioModel>res.locals.usuarioSesion;
         let item = <IMaestroModel>{
             _id: id,
             tipo: tipo,
             eliminado: true,
-            usuarioModificacion: usuario._id
+            usuarioModificacion: usuario._id,
+            fechaModificacion: new Date()
         };
 
         let repo = new MaestroRepositorio();

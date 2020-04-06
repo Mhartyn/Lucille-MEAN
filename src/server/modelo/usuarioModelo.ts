@@ -13,10 +13,10 @@ const UsuarioSchema: Schema = new Schema<IUsuarioModel>({
   rol: { type: String, required: true, default: 'USER' },
   eliminado: { type: Boolean, required: true, default: false },
   usuarioCreacion: { type: ObjectId, ref: "Usuario", required: false },
-  fechaCreacion: { type: Date, required: false },
+  fechaCreacion: { type: Date, required: true, default: new Date() },
   usuarioModificacion: { type: ObjectId, ref: "Usuario", required: false },
   fechaModificacion: { type: Date, required: false }
-}).pre('save', function(next : Function): any {
+})/* .pre('save', function(next : Function): any {
    if (this) {
      let doc = <IUsuarioModel>this;
      let now = new Date();
@@ -29,7 +29,7 @@ const UsuarioSchema: Schema = new Schema<IUsuarioModel>({
    }
    next();
    return this;
- });
+ }) */;
 
 UsuarioSchema.methods.toJSON = function() {
   let user = this;

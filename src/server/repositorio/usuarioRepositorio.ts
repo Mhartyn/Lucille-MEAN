@@ -58,15 +58,10 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
       return <Promise<IUsuarioModel>>p;      
     }
 
-    public eliminarLogico(id: string) : Promise<IUsuarioModel> {
+    public eliminarLogico(item: IUsuarioModel) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {        
   
-        let item = <IUsuarioModel>{
-          _id: id,
-          eliminado: true,                  
-        };
-        console.log('llego aqui');
-        this.update(item._id, item, (err: Error, res: any) => {
+          this.update(item._id, item, (err: Error, res: any) => {
           if (err) {
             reject(err);
           }

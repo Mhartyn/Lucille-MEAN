@@ -38,11 +38,14 @@ class UsuarioController{
 
     static crear = async (req: Request, res: Response) => {
         let {nombre, email, password, rol} = req.body;
+
+        let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
         let usuario = <IUsuarioModel>{
             nombre, 
             email, 
             password: bcrypt.hashSync(password, process.env.VUELTAS_CLAVE), 
-            rol
+            rol,
+            usuarioCreacion: usuarioSesion._id
         };
     
         let repo = new UsuarioRepositorio();
@@ -56,15 +59,19 @@ class UsuarioController{
 
     static modificar = async (req: Request, res: Response) => {
         let id = req.params.id;
-        let {nombre, email, password, rol} = req.body;
+        let {nombre, email, password, rol, eliminado} = req.body;
 
+        let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
         let repo = new UsuarioRepositorio();
         let usuario = <IUsuarioModel>{
             _id: id,
             nombre, 
             email, 
             password: bcrypt.hashSync(password, Number(process.env.VUELTAS_CLAVE)), 
-            rol
+            rol,
+            eliminado,
+            usuarioModificacion: usuarioSesion._id,
+            fechaModificacion: new Date()
         };
         repo.modificar(usuario).then((respuesta: any) => {    
             res.json(new Respuesta('', respuesta, res));
@@ -77,10 +84,18 @@ class UsuarioController{
         let logico = req.params.logico;
         let id = req.params.id;
         
+        let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
         let repo = new UsuarioRepositorio();
         
+        let usuario= <IUsuarioModel>{
+            _id: id,
+            eliminado: true,
+            usuarioModificacion: usuarioSesion._id,
+            fechaModificacion: new Date()
+        }
+
         if (logico) {
-            repo.eliminarLogico(id).then((respuesta: any) => {    
+            repo.eliminarLogico(usuario).then((respuesta: any) => {    
                 res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
                 res.json(new Respuesta('Error al eliminar', err));
