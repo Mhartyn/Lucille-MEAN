@@ -14,12 +14,12 @@ export default class ConsultaModel<T> implements IConsultaModel<T>{
     pagina: number; 
     tamanio: number;
 
-    constructor(item: T, pagina: number, orden: string, direccion: number, tamanio: number){
+    constructor(item: T, pagina: number | undefined, orden: string, direccion: number | undefined, tamanio: number | undefined){
         this.item = item;
         this.orden = orden; 
-        this.direccion = direccion; 
-        this.pagina = pagina; 
-        this.tamanio = tamanio;
+        this.direccion = direccion ? direccion : 1; 
+        this.pagina = pagina ? pagina : 1; 
+        this.tamanio = tamanio ? tamanio : 5;
     }
 
     desde () : number{

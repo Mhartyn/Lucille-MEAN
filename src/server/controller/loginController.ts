@@ -1,24 +1,47 @@
 import { Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
+import utils from '../utlis';
+import IUsuarioModel from '../modelo/interfaces/iUsuarioModel';
+import UsuarioRepositorio from '../repositorio/usuarioRepositorio';
+import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
+import bcrypt from 'bcrypt';
 
 class LoginController{
     static login = async (req: Request, res: Response)=>{
         let { email, password } = req.body;
     
-        let token = <string>jwt.sign({ 
-                usuario: 1 /*codigo de usuario*/, 
-                email,
-                rol: 'ADMIN' 
-            }, 
-            process.env.SEED, {
-            expiresIn: process.env.CADUCIDAD_TOKEN
-        });
-    
-        res.json({
-            ok: true,        
-            token        
-        });
-    
+        let repo = new UsuarioRepositorio();        
+        repo.inicioSesion(email).then((respuesta: any) => {            
+            
+            if (!respuesta) {
+                res.status(400).json({
+                    ok: false,
+                    err: {
+                        message: 'Usuario o la contraseña incorrecta'
+                    }
+                });
+                return;
+            }
+
+            if (!bcrypt.compareSync(password, respuesta.item.password)) {
+                return res.status(400).json({
+                    ok: false,
+                    err: {
+                        message: 'Usuario o la contraseña incorrecta'
+                    }
+                });
+            }
+
+            let token = utils.generaToken(<IUsuarioModel>respuesta.item);
+            
+            res.json({
+                ok: true,
+                item :respuesta.item,
+                token
+            });
+            
+        }, (err: Error) => {
+            res.json(new Respuesta('Error al iniciar sesion', err));
+        });            
     }
 }
 

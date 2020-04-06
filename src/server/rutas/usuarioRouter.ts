@@ -5,10 +5,10 @@ import UsuarioController from '../controller/usuarioController';
 const usuarioRouter = Router();
 
 //listar usuario, filtrado por nombre, el nombre es opcional, ordenado y paginado
-usuarioRouter.get('/usuario/:nombre?', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.listar);
+usuarioRouter.get('/usuarios/:nombre?', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.listar);
 
 //consultar por id usuario
-usuarioRouter.get('/usuario/obtener/:id', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.consultar);
+usuarioRouter.get('/usuario/:id', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.consultar);
 
 //crear usuario
 usuarioRouter.post('/usuario', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.crear);

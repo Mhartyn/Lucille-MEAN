@@ -7,10 +7,10 @@
   const MaestroSchema: Schema = new Schema<IMaestroModel>({
     nombre: { type: String, required: [true, 'El nombre es requerido'], unique: true },
     descripcion: { type: String, required: [true, 'El descripcion es requerido'] },
-    tipo: { type: Number, required: [true, 'El tipo es requerido'] },
+    tipo: { type: String, required: [true, 'El tipo es requerido'] },
     eliminado: { type: Boolean, required: true, default: false },
     usuarioCreacion: { type: ObjectId, ref: "Usuario", required: true },
-    fechaCreacion: { type: Date, required: true },
+    fechaCreacion: { type: Date, required: false },
     usuarioModificacion: { type: ObjectId, ref: "Usuario", required: false },
     fechaModificacion: { type: Date, required: false }
   }).pre('save', function(next : Function): any {

@@ -5,7 +5,7 @@ import MaestroController from '../controller/maestroController';
 const maestroRouter = Router();
 
 //listar maestro, filtrado por nombre, el nombre es opcional, ordenado y paginado
-maestroRouter.get('/maestro/:tipo/:nombre?', verificaToken, MaestroController.listar);
+maestroRouter.get('/maestros/:tipo/:nombre?', verificaToken, MaestroController.listar);
 
 //consultar por id maestro
 maestroRouter.get('/maestro/:tipo/:id', verificaToken, MaestroController.consultar);
