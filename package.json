@@ -6,7 +6,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "html": "copyfiles --up 1 src/public/*.html dist",
-        "build": "tsc && npm rum html"
+        "build": "tsc && npm rum html",
+        "start": "tsc && nodemon dist/index"
     },
     "author": "Martín Gutiérrez",
     "license": "ISC",
