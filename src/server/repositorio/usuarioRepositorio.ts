@@ -10,7 +10,7 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
     }
 
     public crear(item: IUsuarioModel) : Promise<IUsuarioModel> {
-      let p = new Promise((resolve, reject) => {        
+      return new Promise((resolve, reject) => {        
   
         this.create(item, (err: Error, res: any) => {
           if (err) {
@@ -21,7 +21,6 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           }
         });            
       });      
-      return <Promise<IUsuarioModel>>p;      
     }
 
     public modificar(item: IUsuarioModel) : Promise<IUsuarioModel> {

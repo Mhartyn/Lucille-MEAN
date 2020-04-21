@@ -38,14 +38,15 @@ class UsuarioController{
 
     static crear = async (req: Request, res: Response) => {
         let {nombre, email, password, rol} = req.body;
-
-        let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
+        
+        //let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
+        
         let usuario = <IUsuarioModel>{
             nombre, 
             email, 
-            password: bcrypt.hashSync(password, process.env.VUELTAS_CLAVE), 
+            password: await bcrypt.hash(password, Number(process.env.VUELTAS_CLAVE)), 
             rol,
-            usuarioCreacion: usuarioSesion._id
+            //usuarioCreacion: usuarioSesion._id
         };
     
         let repo = new UsuarioRepositorio();
@@ -67,7 +68,7 @@ class UsuarioController{
             _id: id,
             nombre, 
             email, 
-            password: bcrypt.hashSync(password, Number(process.env.VUELTAS_CLAVE)), 
+            password: await bcrypt.hash(password, Number(process.env.VUELTAS_CLAVE)),
             rol,
             eliminado,
             usuarioModificacion: usuarioSesion._id,

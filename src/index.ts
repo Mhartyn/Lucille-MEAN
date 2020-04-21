@@ -1,6 +1,6 @@
 import Server from './server/server';
 import mongoose from 'mongoose';
-import { Inicial } from './server/config/inicial';
+import Inicial from './server/config/inicial';
 
 Inicial.init();
 
@@ -14,7 +14,7 @@ mongoose.connect(process.env.URLDB, {
     useFindAndModify: true
     }, (err)=> {
         if (err) {
-            console.log(err);
+            console.log(err)
         }
 
         console.log('BD conectada....');

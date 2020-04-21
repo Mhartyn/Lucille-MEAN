@@ -11,7 +11,7 @@ usuarioRouter.get('/usuarios/:nombre?', [verificaToken, verificaRol(['ADMIN'])],
 usuarioRouter.get('/usuario/:id', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.consultar);
 
 //crear usuario
-usuarioRouter.post('/usuario', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.crear);
+usuarioRouter.post('/usuario', /* [verificaToken, verificaRol(['ADMIN'])], */ UsuarioController.crear);
 
 //modifica usuario
 usuarioRouter.put('/usuario/:id', [verificaToken, verificaRol(['ADMIN'])], UsuarioController.modificar);

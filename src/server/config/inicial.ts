@@ -1,4 +1,4 @@
-export class Inicial{
+export default class Inicial{
     static init = (): void => {
       //==========================
       //PUERTO

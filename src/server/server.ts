@@ -13,6 +13,12 @@ export default class Server{
     constructor(puerto: number){
         this.port = puerto;
         this.app = express();
+        this.app.use((req, res, next)=>{
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+            next();
+        });
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());        
     }
