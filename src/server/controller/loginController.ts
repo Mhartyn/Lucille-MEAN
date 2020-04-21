@@ -40,7 +40,7 @@ class LoginController{
             });
             
         }, (err: Error) => {
-            res.json(new Respuesta('Error al iniciar sesion', err));
+            res.status(503).json(new Respuesta('Error al iniciar sesion', err));
         });            
     }
 }

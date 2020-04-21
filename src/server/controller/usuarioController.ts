@@ -32,7 +32,7 @@ class UsuarioController{
         repo.obtener(id).then((respuesta: IUsuarioModel) => {
             res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                res.json(new Respuesta('Error al consultar', err));
+                res.status(503).json(new Respuesta('Error al consultar', err));
             });
     }
 
@@ -54,7 +54,7 @@ class UsuarioController{
         repo.crear(usuario).then((respuesta: any) => {    
             res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json(new Respuesta('Error al crear', err));
+            res.status(503).json(new Respuesta('Error al crear', err));
         });
     }
 
@@ -77,7 +77,7 @@ class UsuarioController{
         repo.modificar(usuario).then((respuesta: any) => {    
             res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json(new Respuesta('Error al modificar', err));
+            res.status(503).json(new Respuesta('Error al modificar', err));
         });
     }
 
@@ -99,14 +99,14 @@ class UsuarioController{
             repo.eliminarLogico(usuario).then((respuesta: any) => {    
                 res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                res.json(new Respuesta('Error al eliminar', err));
+                res.status(503).json(new Respuesta('Error al eliminar', err));
             });
         }
         else{
             repo.eliminar(id).then((respuesta: any) => {    
                 res.json(new Respuesta('', {respuesta: 'Se elimino correctamente.'}, res));
             }, (err: Error) => {
-                res.json(new Respuesta('', err));
+                res.status(503).json(new Respuesta('', err));
             });
         }
     }

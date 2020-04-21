@@ -22,7 +22,7 @@ class MaestroController{
         repo.consultar(criterio).then((respuesta: any) => {
             res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json(new Respuesta('Error al listar', err));
+            res.status(503).json(new Respuesta('Error al listar', err));
         });
     }
 
@@ -38,7 +38,7 @@ class MaestroController{
         repo.obtener(item).then((respuesta: IMaestroModel) => {
             res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                res.json(new Respuesta('Error al consultar', err));
+                res.status(503).json(new Respuesta('Error al consultar', err));
               });
     }
 
@@ -80,7 +80,7 @@ class MaestroController{
         }).then((respuesta: any) => {    
             res.json(new Respuesta('', respuesta, res));
         }, (err: Error) => {
-            res.json(new Respuesta('Error al modificar', err));
+            res.status(503).json(new Respuesta('Error al modificar', err));
         });
     }
 
@@ -103,14 +103,14 @@ class MaestroController{
             repo.eliminarLogico(item).then((respuesta: any) => {    
                 res.json(new Respuesta('', respuesta, res));
             }, (err: Error) => {
-                res.json(new Respuesta('Error al eliminar', err));
+                res.status(503).json(new Respuesta('Error al eliminar', err));
             });
         }
         else{
             repo.eliminar(id).then((respuesta: any) => {    
                 res.json(new Respuesta('', {respuesta: 'Eliminado correctamente.'}, res));
             }, (err: Error) => {
-                res.json(new Respuesta('Error al eliminar', err));
+                res.status(503).json(new Respuesta('Error al eliminar', err));
             });
         }
     }
