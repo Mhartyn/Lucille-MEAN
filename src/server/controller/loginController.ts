@@ -13,22 +13,12 @@ class LoginController{
         repo.inicioSesion(email).then((respuesta: any) => {            
             
             if (!respuesta) {
-                res.status(503).json({
-                    ok: false,
-                    err: {
-                        message: 'Usuario o la contraseña incorrecta'
-                    }
-                });
+                res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));
                 return;
             }
 
             if (!bcrypt.compareSync(password, respuesta.item.password)) {
-                return res.status(503).json({
-                    ok: false,
-                    err: {
-                        message: 'Usuario o la contraseña incorrecta'
-                    }
-                });
+                return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
             }
 
             let token = utils.generaToken(<IUsuarioModel>respuesta.item);
