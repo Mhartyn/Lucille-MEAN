@@ -13,7 +13,7 @@ class LoginController{
         repo.inicioSesion(email).then((respuesta: any) => {            
             
             if (!respuesta) {
-                res.status(400).json({
+                res.status(503).json({
                     ok: false,
                     err: {
                         message: 'Usuario o la contraseña incorrecta'
@@ -23,7 +23,7 @@ class LoginController{
             }
 
             if (!bcrypt.compareSync(password, respuesta.item.password)) {
-                return res.status(400).json({
+                return res.status(503).json({
                     ok: false,
                     err: {
                         message: 'Usuario o la contraseña incorrecta'
