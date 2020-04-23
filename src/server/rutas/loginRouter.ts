@@ -5,4 +5,6 @@ const loginRouter = Router();
 
 loginRouter.post('/login', LoginController.login);
 
+loginRouter.post('/googleLogin', LoginController.googleLogin);
+
 export default loginRouter;

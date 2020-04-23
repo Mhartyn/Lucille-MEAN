@@ -51,6 +51,6 @@ export default class Inicial{
       //==========================
       // client id
       //==========================
-      process.env.CLIENT_ID = process.env.CLIENT_ID || '294285680381-jkt7p0b3vo3eus6c9rqik8fso15l9e3a.apps.googleusercontent.com';
+      process.env.CLIENT_ID = process.env.CLIENT_ID || '433180258042-53iuubf5d6pdhcebhemg4phrdblq3vbm.apps.googleusercontent.com';
   }
   }

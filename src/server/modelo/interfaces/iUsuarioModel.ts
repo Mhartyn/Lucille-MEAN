@@ -5,5 +5,6 @@ export default interface IUsuarioModel extends IBaseModel {
   email: string;
   password: string;  
   rol: string;
+  img: string;
   google: boolean;
 }
