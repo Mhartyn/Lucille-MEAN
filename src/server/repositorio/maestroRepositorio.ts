@@ -93,7 +93,7 @@ export default class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
                 reject(err);
               }
               else {
-                if (res.length) {
+                if (res.length) {                  
                   resolve(new RespuestaPaginada(criterio, res, total));
                 }
                 else {

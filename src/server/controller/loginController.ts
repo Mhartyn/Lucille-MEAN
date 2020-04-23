@@ -60,16 +60,14 @@ class LoginController{
     public static googleLogin = async (req: Request, res: Response)=>{
         let { token } = req.body;
 
-        let googleUser:any = await LoginController.verificaTokenGoogle(token).catch(e=>{
-            return res.status(503).json(new Respuesta('Token de google invalido', {}));
-        });
+        let googleUser:any = await LoginController.verificaTokenGoogle(token).catch(e=> res.status(503).json(new Respuesta('Token de google invalido', {})));
+
+        if (!googleUser.email) return;
 
         let repo = new UsuarioRepositorio();        
-        let respuesta: any = await repo.obtenerEmail(googleUser.email)
-                                .catch(e=> {
-                                    return res.status(503).json(new Respuesta('Email ya esta registrado', e))
-                                });
-        
+        let respuesta: any = await repo.inicioSesion(googleUser.email)
+                                .catch(e=> res.status(503).json(new Respuesta('Email ya esta registrado', e)));
+
         let usuario: IUsuarioModel;
 
         if (respuesta) {
@@ -88,9 +86,10 @@ class LoginController{
             };
             
             respuesta = await repo.crear(usuarioNew)
-            .catch(err => {
-                return res.status(503).json(new Respuesta('Error al crear', err))                
-            });
+            .catch(err => res.status(503).json(new Respuesta('Error al crear', err)));
+
+            if (!respuesta) 
+                return res.status(503).json(new Respuesta('Error al crear', {}));
 
             usuario = respuesta;
         }
@@ -103,7 +102,6 @@ class LoginController{
             token: tokenNew
         });
     }
-
     /* =============================================================
     ============================FIN GOOGLE===========================
     ============================================================= */
