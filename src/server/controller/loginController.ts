@@ -11,29 +11,29 @@ class LoginController{
     public static login = async (req: Request, res: Response)=>{
         let { email, password } = req.body;
     
-        let repo = new UsuarioRepositorio();        
-        repo.inicioSesion(email).then((respuesta: any) => {            
-            
-            if (!respuesta) {
-                res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));
-                return;
-            }
+        let repo = new UsuarioRepositorio();
 
-            if (!bcrypt.compareSync(password, respuesta.item.password)) {
-                return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
-            }
+        let respuesta: any = await repo.inicioSesion(email).catch(e=>{
+            return res.status(503).json(new Respuesta('Error al iniciar sesion', e));            
+        });
 
-            let token = utils.generaToken(<IUsuarioModel>respuesta.item);
-            
-            res.json({
-                ok: true,
-                item :respuesta.item,
-                token
-            });
-            
-        }, (err: Error) => {
-            res.status(503).json(new Respuesta('Error al iniciar sesion', err));
-        });            
+        if (!respuesta) {
+            return res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));            
+        }
+
+        let usuario = respuesta.item
+
+        if (!bcrypt.compareSync(password, usuario.password)) {
+            return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
+        }
+
+        let token = utils.generaToken(<IUsuarioModel>usuario);
+        
+        res.json({
+            ok: true,
+            item :usuario,
+            token
+        });
     }
 
     /* =============================================================
@@ -67,8 +67,7 @@ class LoginController{
         let repo = new UsuarioRepositorio();        
         let respuesta: any = await repo.obtenerEmail(googleUser.email)
                                 .catch(e=> {
-                                    res.status(503).json(new Respuesta('Email ya esta registrado', e))
-                                    return;
+                                    return res.status(503).json(new Respuesta('Email ya esta registrado', e))
                                 });
         
         let usuario: IUsuarioModel;
@@ -76,8 +75,7 @@ class LoginController{
         if (respuesta) {
             usuario = respuesta.item;
             if (!usuario.google) {
-                res.status(503).json(new Respuesta('Email ya esta registrado', {}));
-                return;
+                return res.status(503).json(new Respuesta('Email ya esta registrado', {}));                
             }
         }
         else{            
@@ -91,8 +89,7 @@ class LoginController{
             
             respuesta = await repo.crear(usuarioNew)
             .catch(err => {
-                res.status(503).json(new Respuesta('Error al crear', err))
-                return;
+                return res.status(503).json(new Respuesta('Error al crear', err))                
             });
 
             usuario = respuesta;
