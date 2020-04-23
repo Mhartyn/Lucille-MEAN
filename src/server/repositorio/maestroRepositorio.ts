@@ -118,7 +118,7 @@ export default class MaestroRepositorio extends RepositoryBase<IMaestroModel> {
           else {
                 if (res) {
                   resolve({
-                    items: res,
+                    item: res,
                   });
                 }
                 else {

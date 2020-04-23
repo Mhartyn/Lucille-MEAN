@@ -60,17 +60,50 @@ class LoginController{
     public static googleLogin = async (req: Request, res: Response)=>{
         let { token } = req.body;
 
-        let googleUser = await LoginController.verificaTokenGoogle(token).catch(e=>{
-            return res.status(503).json({
-                ok: false,    
-                mensaje: 'token invalido',
-                e
-            });
+        let googleUser:any = await LoginController.verificaTokenGoogle(token).catch(e=>{
+            return res.status(503).json(new Respuesta('Token de google invalido', {}));
         });
 
-        return res.json({
+        let repo = new UsuarioRepositorio();        
+        let respuesta: any = await repo.obtenerEmail(googleUser.email)
+                                .catch(e=> {
+                                    res.status(503).json(new Respuesta('Email ya esta registrado', e))
+                                    return;
+                                });
+        
+        let usuario: IUsuarioModel;
+
+        if (respuesta) {
+            usuario = respuesta.item;
+            if (!usuario.google) {
+                res.status(503).json(new Respuesta('Email ya esta registrado', {}));
+                return;
+            }
+        }
+        else{            
+            let usuarioNew = <IUsuarioModel>{
+                nombre: googleUser.nombre, 
+                email: googleUser.email, 
+                password: process.env.CLAVE_USUARIO_GOOGLE, 
+                rol: process.env.ROL_DEFAULT,
+                google: true
+            };
+            
+            respuesta = await repo.crear(usuarioNew)
+            .catch(err => {
+                res.status(503).json(new Respuesta('Error al crear', err))
+                return;
+            });
+
+            usuario = respuesta;
+        }
+
+        const tokenNew: string = utils.generaToken(<IUsuarioModel>usuario);
+        
+        res.json({
             ok: true,
-            googleUser
+            item: usuario,
+            token: tokenNew
         });
     }
 

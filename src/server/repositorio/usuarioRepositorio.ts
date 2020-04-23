@@ -117,7 +117,30 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           else {
                 if (res) {
                   resolve({
-                    items: res,
+                    item: res,
+                  });
+                }
+                else {
+                  resolve(null);
+                }
+              }                 
+        });
+      });
+      
+      return <Promise<IUsuarioModel>>p;
+    }
+
+    public obtenerEmail(email: string) : Promise<IUsuarioModel> {
+      let p = new Promise((resolve, reject) => {
+        
+        this.findOne({email}, (err: Error, res: IUsuarioModel) => {
+          if (err) {
+            reject(err);
+          }
+          else {
+                if (res) {
+                  resolve({
+                    item: res,
                   });
                 }
                 else {

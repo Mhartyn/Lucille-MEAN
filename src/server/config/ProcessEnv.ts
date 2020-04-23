@@ -10,5 +10,7 @@ declare namespace NodeJS {
       MONGO_URI: string;
       URLDB: string;
       CLIENT_ID: string;
+      CLAVE_USUARIO_GOOGLE: string;
+      ROL_DEFAULT: string;
     }
 }

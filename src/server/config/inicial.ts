@@ -52,5 +52,15 @@ export default class Inicial{
       // client id
       //==========================
       process.env.CLIENT_ID = process.env.CLIENT_ID || '433180258042-53iuubf5d6pdhcebhemg4phrdblq3vbm.apps.googleusercontent.com';
+
+      //==========================
+      // client id
+      //==========================
+      process.env.CLAVE_USUARIO_GOOGLE = process.env.CLAVE_USUARIO_GOOGLE || 'SIN_CLAVE';
+
+      //==========================
+      // client id
+      //==========================
+      process.env.ROL_DEFAULT = process.env.ROL_DEFAULT || 'USER_ROL';
   }
   }
