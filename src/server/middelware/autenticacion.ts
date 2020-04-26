@@ -1,7 +1,8 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import utils from '../utlis';
+import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
 import IUsuarioModel from '../modelo/interfaces/iUsuarioModel';
+import utils from '../utlis';
 
 export const verificaToken = (req: Request, res: Response, next: NextFunction) => {
     const token : string = <string>req.headers[process.env.TOKEN_INICIAL];
@@ -12,13 +13,9 @@ export const verificaToken = (req: Request, res: Response, next: NextFunction) =
     try {
         usuarioSesion = <any>jwt.verify(token, process.env.SEED);
         res.locals.usuarioSesion = <IUsuarioModel>(usuarioSesion.usuario);        
-      } catch (error) {
-        //If token is not valid, respond with 401 (unauthorized)
-        res.status(401).json({
-            ok: false,
-            err: 'Error al leer el token'
-        });
-        return;
+    } catch (error) {
+      //If token is not valid, respond with 401 (unauthorized)
+      return res.status(503).json(new Respuesta('Error al crear', error));      
     }
 
     //The token is valid for 1 hour
