@@ -11,6 +11,7 @@ const UsuarioSchema: Schema = new Schema<IUsuarioModel>({
   password: { type: String, required: [true, 'La clave es requerido'] },
   google: { type: Boolean, required: true, default: false },
   rol: { type: String, required: true, default: 'USER' },
+  img: { type: String, required: true },
   eliminado: { type: Boolean, required: true, default: false },
   usuarioCreacion: { type: ObjectId, ref: "Usuario", required: false },
   fechaCreacion: { type: Date, required: true, default: new Date() },

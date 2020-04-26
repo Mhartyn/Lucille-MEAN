@@ -9,31 +9,34 @@ import {OAuth2Client, TokenPayload} from 'google-auth-library'
 
 class LoginController{
     public static login = async (req: Request, res: Response)=>{
-        let { email, password } = req.body;
-    
-        let repo = new UsuarioRepositorio();
-
-        let respuesta: any = await repo.inicioSesion(email).catch(e=>{
-            return res.status(503).json(new Respuesta('Error al iniciar sesion', e));            
-        });
-
-        if (!respuesta) {
-            return res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));            
-        }
-
-        let usuario = respuesta.item
-
-        if (!bcrypt.compareSync(password, usuario.password)) {
-            return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
-        }
-
-        let token = utils.generaToken(<IUsuarioModel>usuario);
+        try {
+            
+            let { email, password } = req.body;
         
-        res.json({
-            ok: true,
-            item :usuario,
-            token
-        });
+            let repo = new UsuarioRepositorio();
+    
+            let respuesta: any = await repo.inicioSesion(email);
+            
+            if (!respuesta) {
+                return res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));            
+            }
+    
+            let usuario = respuesta.item
+    
+            if (!bcrypt.compareSync(password, usuario.password)) {
+                return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
+            }
+    
+            let token = utils.generaToken(<IUsuarioModel>usuario);
+            
+            res.json({
+                ok: true,
+                item :usuario,
+                token
+            });
+        } catch (err) {
+            return res.status(503).json(new Respuesta('Error al iniciar sesion', err));
+        }
     }
 
     /* =============================================================
@@ -58,49 +61,50 @@ class LoginController{
     } 
 
     public static googleLogin = async (req: Request, res: Response)=>{
-        let { token } = req.body;
-
-        let googleUser:any = await LoginController.verificaTokenGoogle(token).catch(e=> res.status(503).json(new Respuesta('Token de google invalido', {})));
-
-        if (!googleUser.email) return;
-
-        let repo = new UsuarioRepositorio();        
-        let respuesta: any = await repo.inicioSesion(googleUser.email)
-                                .catch(e=> res.status(503).json(new Respuesta('Email ya esta registrado', e)));
-
-        let usuario: IUsuarioModel;
-
-        if (respuesta) {
-            usuario = respuesta.item;
-            if (!usuario.google) {
-                return res.status(503).json(new Respuesta('Email ya esta registrado', {}));                
-            }
-        }
-        else{            
-            let usuarioNew = <IUsuarioModel>{
-                nombre: googleUser.nombre, 
-                email: googleUser.email, 
-                password: process.env.CLAVE_USUARIO_GOOGLE, 
-                rol: process.env.ROL_DEFAULT,
-                google: true
-            };
+        try {
             
-            respuesta = await repo.crear(usuarioNew)
-            .catch(err => res.status(503).json(new Respuesta('Error al crear', err)));
-
-            if (!respuesta) 
-                return res.status(503).json(new Respuesta('Error al crear', {}));
-
-            usuario = respuesta;
+            let { token } = req.body;
+    
+            let googleUser:any = await LoginController.verificaTokenGoogle(token).catch(e=> res.status(503).json(new Respuesta('Token de google invalido', {})));
+    
+            if (!googleUser.email) return;
+    
+            let repo = new UsuarioRepositorio();        
+            let respuesta: any = await repo.inicioSesion(googleUser.email)
+                                    .catch(e=> res.status(503).json(new Respuesta('Email ya esta registrado', e)));
+    
+            let usuario: IUsuarioModel;
+    
+            if (respuesta) {
+                usuario = respuesta.item;
+                if (!usuario.google) {
+                    return res.status(503).json(new Respuesta('Email ya esta registrado', {}));                
+                }
+            }
+            else{    
+                let usuarioNew = <IUsuarioModel>{
+                    nombre: googleUser.nombre, 
+                    email: googleUser.email, 
+                    password: process.env.CLAVE_USUARIO_GOOGLE, 
+                    rol: process.env.ROL_DEFAULT,
+                    google: true,
+                    img: googleUser.img
+                };
+                
+                respuesta = await repo.crear(usuarioNew)
+                usuario = respuesta;
+            }
+    
+            const tokenNew: string = utils.generaToken(<IUsuarioModel>usuario);
+            
+            res.json({
+                ok: true,
+                item: usuario,
+                token: tokenNew
+            });
+        } catch (err) {
+            res.status(503).json(new Respuesta('Error al crear', err));
         }
-
-        const tokenNew: string = utils.generaToken(<IUsuarioModel>usuario);
-        
-        res.json({
-            ok: true,
-            item: usuario,
-            token: tokenNew
-        });
     }
     /* =============================================================
     ============================FIN GOOGLE===========================

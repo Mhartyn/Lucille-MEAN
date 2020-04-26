@@ -1,10 +1,13 @@
 import loginRouter from './rutas/loginRouter';
-import grupoController from './rutas/grupo';
 import maestroRouter from './rutas/maestroRouter';
 import usuarioRouter from './rutas/usuarioRouter';
+import uploadRouter from './rutas/uploadRouter';
+
 import express = require('express');
-import path = require('path');
 import bodyParser = require('body-parser');
+import fileUpload = require('express-fileupload');
+
+import path = require('path');
 
 export default class Server{
     public app: express.Application;
@@ -19,6 +22,8 @@ export default class Server{
             res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
             next();
         });
+
+        this.app.use(fileUpload({ useTempFiles: true }));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());        
     }
@@ -38,6 +43,7 @@ export default class Server{
         //this.app.use(grupoController);
         this.app.use(maestroRouter);
         this.app.use(usuarioRouter);
+        this.app.use(uploadRouter);
         this.publicFolder();
     }    
 }
