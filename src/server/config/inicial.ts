@@ -54,13 +54,23 @@ export default class Inicial{
       process.env.CLIENT_ID = process.env.CLIENT_ID || '433180258042-53iuubf5d6pdhcebhemg4phrdblq3vbm.apps.googleusercontent.com';
 
       //==========================
-      // client id
+      // clave por defecto
       //==========================
       process.env.CLAVE_USUARIO_GOOGLE = process.env.CLAVE_USUARIO_GOOGLE || 'SIN_CLAVE';
 
       //==========================
-      // client id
+      // usuario por defecto
       //==========================
       process.env.ROL_DEFAULT = process.env.ROL_DEFAULT || 'USER_ROL';
+
+      //==========================
+      // carpeta para sabir archivos
+      //==========================
+      process.env.FILE_UPLOAD = process.env.FILE_UPLOAD || 'uploads';    
+      
+      //==========================
+      // imagen por defecto
+      //==========================
+      process.env.IMG_DEFECTO = process.env.IMG_DEFECTO || 'public/defecto.png';      
   }
   }

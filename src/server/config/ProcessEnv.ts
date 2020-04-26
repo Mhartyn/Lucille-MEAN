@@ -12,5 +12,7 @@ declare namespace NodeJS {
       CLIENT_ID: string;
       CLAVE_USUARIO_GOOGLE: string;
       ROL_DEFAULT: string;
+      FILE_UPLOAD: string;
+      IMG_DEFECTO: string;
     }
 }

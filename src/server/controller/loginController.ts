@@ -20,6 +20,14 @@ class LoginController{
             if (!respuesta) {
                 return res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));            
             }
+
+            if (respuesta.item.google) {
+                return res.status(503).json(new Respuesta('Use inicio sesion por Google', {}));            
+            }
+
+            if (respuesta.item.eliminado) {
+                return res.status(503).json(new Respuesta('Usuario desactivado', {}));            
+            }
     
             let usuario = respuesta.item
     

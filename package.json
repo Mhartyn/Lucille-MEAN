@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "html": "copyfiles --up 1 src/public/*.html dist",
+        "html": "copyfiles --up 1 src/public/*.* dist",
         "build": "tsc && npm rum html",
         "start": "tsc && nodemon dist/index"
     },

@@ -1,7 +1,7 @@
 import loginRouter from './rutas/loginRouter';
 import maestroRouter from './rutas/maestroRouter';
 import usuarioRouter from './rutas/usuarioRouter';
-import uploadRouter from './rutas/uploadRouter';
+import archivoRouter from './rutas/archivoRouter';
 
 import express = require('express');
 import bodyParser = require('body-parser');
@@ -43,7 +43,7 @@ export default class Server{
         //this.app.use(grupoController);
         this.app.use(maestroRouter);
         this.app.use(usuarioRouter);
-        this.app.use(uploadRouter);
+        this.app.use(archivoRouter);
         this.publicFolder();
     }    
 }

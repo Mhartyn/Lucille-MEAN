@@ -1,14 +1,13 @@
-import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
 import { Request, Response } from 'express';
-import fileUpload from 'express-fileupload';
 import UsuarioRepositorio from '../repositorio/usuarioRepositorio';
-import fs from 'fs';
-import path from 'path';
-import utils from '../utlis';
+import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
 import IUsuarioModel from '../modelo/interfaces/iUsuarioModel';
+import utils from '../utlis';
+import path from 'path';
+import fs from 'fs';
 
-class UploadController{
-    public static SubirArchivos = async (req: Request, res: Response) => {
+class ArchivoController{
+    public static Sube = async (req: Request, res: Response) => {
         try {
             let { tipo, id } = req.params;
 
@@ -17,7 +16,6 @@ class UploadController{
             if (!files) {
                 return res.status(503).json(new Respuesta('Error al subir archivo files', {}));
             }
-
 
             //validar tipo
             let tiposValidos = ['producto', 'usuario'];
@@ -32,42 +30,32 @@ class UploadController{
             //extensiones permitidas
             let extensionesPermitidad = ['PNG', 'JPG', 'GIF', 'JPEG'];
                 
-            if (extensionesPermitidad.indexOf(extension) < 0) {
+            if (extensionesPermitidad.indexOf(extension.toUpperCase()) < 0) {
                 return res.status(503).json(new Respuesta(`las extensiones permitidas son ${extensionesPermitidad.join(',')}, el archivo tiene extension ${extension}`, {}));
             }
             
             let nombreGenerado = `${id}-${new Date().getMilliseconds()}.${extension}`;
             
-            let pathImg = path.resolve(__dirname, `../../public/uploads/${tipo}s/${nombreGenerado}`);
+            utils.creaDirectorio(tipo);
+            let pathImg = path.resolve(__dirname, `../../${process.env.FILE_UPLOAD}/${tipo}/${nombreGenerado}`);
             archivo.mv(pathImg, (err: any) => {
             if (err) return res.status(503).json(new Respuesta(`Error al mover archivo mv`, err));            
 
                 switch (tipo) {
                     case 'usuario':
-                        UploadController.imagenUsuario(id, res, nombreGenerado, tipo);
+                        ArchivoController.imagenUsuario(id, res, nombreGenerado, tipo);
                         break;
                     case 'producto':
                         //imagenProducto(id, res, nombreGenerado, tipo);
                         break;
                     default:
                         return res.status(503).json(new Respuesta(`Tipo de archivo incorrecto`, err));
-                    break;
                 }
-
-
             });
         } catch (err) {
             return res.status(503).json(new Respuesta('Error al subir archivo catch', err));
         }
-    }
-
-    private static borrarAcrhivo = (nombreArchivo: string, tipo: string) => {
-        let pathImg = path.resolve(__dirname, `../../public/uploads/${tipo}s/${nombreArchivo}`);
-        //console.log(pathImg);
-        if (fs.existsSync(pathImg)) {
-            fs.unlinkSync(pathImg);
-        }
-    }
+    }        
 
     private static imagenUsuario = async (id: string, res: Response, nombreArchivo: string, tipo: string ) => {
         try {
@@ -76,12 +64,12 @@ class UploadController{
             let respuesta: any = await repo.obtener(id);
 
             if (!respuesta) {
-                UploadController.borrarAcrhivo(nombreArchivo, tipo);
+                utils.borrarAcrhivo(nombreArchivo, tipo);
                 return res.status(503).json(new Respuesta('usuario no existe', {}));                
             }
 
             let usuario = respuesta.item;            
-            UploadController.borrarAcrhivo(usuario.img, tipo)
+            utils.borrarAcrhivo(usuario.img, tipo)
     
             usuario.img = nombreArchivo;
 
@@ -96,10 +84,26 @@ class UploadController{
             });
 
         } catch (error) {
-            UploadController.borrarAcrhivo(nombreArchivo, tipo);
+            utils.borrarAcrhivo(nombreArchivo, tipo);
             return res.status(503).json(new Respuesta('Error al modificar usuario', error));
         }
     };
+
+    public static Descarga = async (req: Request, res: Response) => {
+        let { tipo, img } = req.params;        
+    
+        let pathNoImage = path.resolve(__dirname, `../../${process.env.IMG_DEFECTO}`);
+        let pathImg = path.resolve(__dirname, `../../${process.env.FILE_UPLOAD}/${tipo}/${img}`);
+        let pathResp = '';
+        
+        if (fs.existsSync(pathImg)) {
+            pathResp = pathImg;
+        } else {
+            pathResp = pathNoImage;
+        }
+    
+        res.sendFile(pathResp);
+    }
 }
 
-export default UploadController;
+export default ArchivoController;
