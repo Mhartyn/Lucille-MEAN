@@ -32,9 +32,7 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           }
           else {            
             if (res.ok) {
-              console.log(item._id);
               this.findById(item._id, (err: Error, db: IUsuarioModel)=>{
-                console.log(db);
                 resolve(db);
               });              
             }

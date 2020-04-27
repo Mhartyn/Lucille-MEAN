@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import UsuarioRepositorio from '../repositorio/usuarioRepositorio';
 import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
-import IUsuarioModel from '../modelo/interfaces/iUsuarioModel';
 import utils from '../utlis';
 import path from 'path';
 import fs from 'fs';
@@ -14,7 +13,7 @@ class ArchivoController{
             let {files} = req;
             
             if (!files) {
-                return res.status(503).json(new Respuesta('Error al subir archivo files', {}));
+                return res.status(503).json(new Respuesta('Error al suir archivo files', {}));
             }
 
             //validar tipo
@@ -68,7 +67,7 @@ class ArchivoController{
                 return res.status(503).json(new Respuesta('usuario no existe', {}));                
             }
 
-            let usuario = respuesta.item;            
+            let usuario = respuesta;            
             utils.borrarAcrhivo(usuario.img, tipo)
     
             usuario.img = nombreArchivo;

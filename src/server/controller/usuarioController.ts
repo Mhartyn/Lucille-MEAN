@@ -74,7 +74,7 @@ class UsuarioController{
             
             let obtUsuario: any = await repo.obtener(id);
             
-            let usuario = obtUsuario.item;
+            let usuario = obtUsuario;
 
             usuario.nombre = nombre; 
             usuario.email = email;
