@@ -74,14 +74,7 @@ class ArchivoController{
             usuario.img = nombreArchivo;
 
             usuario = await repo.modificar(usuario);
-
-            let token = utils.generaToken(<IUsuarioModel>usuario);
-
-            res.json({
-                ok: true,
-                item :usuario,
-                token
-            });
+            res.json(new Respuesta('', usuario, res));            
 
         } catch (error) {
             utils.borrarAcrhivo(nombreArchivo, tipo);

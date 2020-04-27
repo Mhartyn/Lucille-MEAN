@@ -67,20 +67,20 @@ class UsuarioController{
     static modificar = async (req: Request, res: Response) => {        
         try {
             let id = req.params.id;
-            let {nombre, email, password, rol, eliminado} = req.body;
+            let {nombre, email/* , password, rol, eliminado */} = req.body;
     
             let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
             let repo = new UsuarioRepositorio();
-            let usuario = <IUsuarioModel>{
-                _id: id,
-                nombre, 
-                email, 
-                password: await bcrypt.hash(password, Number(process.env.VUELTAS_CLAVE)),
-                rol,
-                eliminado,
-                usuarioModificacion: usuarioSesion._id,
-                fechaModificacion: new Date()
-            };
+            
+            let obtUsuario: any = await repo.obtener(id);
+            
+            let usuario = obtUsuario.item;
+
+            usuario.nombre = nombre; 
+            usuario.email = email;
+            usuario.usuarioModificacion = usuarioSesion._id,
+            usuario.fechaModificacion = new Date();            
+            
             let respuesta = await repo.modificar(usuario);
             
             res.json(new Respuesta('', respuesta, res));

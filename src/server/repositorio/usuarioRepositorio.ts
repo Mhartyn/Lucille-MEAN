@@ -32,7 +32,9 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           }
           else {            
             if (res.ok) {
+              console.log(item._id);
               this.findById(item._id, (err: Error, db: IUsuarioModel)=>{
+                console.log(db);
                 resolve(db);
               });              
             }
@@ -116,9 +118,7 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           }
           else {
                 if (res) {
-                  resolve({
-                    item: res,
-                  });
+                  resolve(res);
                 }
                 else {
                   resolve(null);
@@ -140,9 +140,7 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
           }
           else {
                 if (res) {
-                  resolve({
-                    item: res,
-                  });
+                  resolve(res);
                 }
                 else {
                   resolve(null);

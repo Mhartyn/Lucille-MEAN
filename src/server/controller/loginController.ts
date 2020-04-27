@@ -21,15 +21,15 @@ class LoginController{
                 return res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));            
             }
 
-            if (respuesta.item.google) {
+            if (respuesta.google) {
                 return res.status(503).json(new Respuesta('Use inicio sesion por Google', {}));            
             }
 
-            if (respuesta.item.eliminado) {
+            if (respuesta.eliminado) {
                 return res.status(503).json(new Respuesta('Usuario desactivado', {}));            
             }
     
-            let usuario = respuesta.item
+            let usuario = respuesta
     
             if (!bcrypt.compareSync(password, usuario.password)) {
                 return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
@@ -84,7 +84,7 @@ class LoginController{
             let usuario: IUsuarioModel;
     
             if (respuesta) {
-                usuario = respuesta.item;
+                usuario = respuesta;
                 if (!usuario.google) {
                     return res.status(503).json(new Respuesta('Email ya esta registrado', {}));                
                 }
