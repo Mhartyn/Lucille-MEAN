@@ -5,10 +5,11 @@ import fs from 'fs';
 
 export default class utils{
     public static numeroPaginas = (total: number, tamanio: number): number => {
-        let nro = Math.round(total / tamanio);
+        let nro = total === 0 ? 1 : Math.round(total / tamanio);
         if (nro * tamanio < total) {
             nro += 1;
         }
+
         return nro;
     }
 
