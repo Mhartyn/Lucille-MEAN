@@ -67,7 +67,7 @@ class UsuarioController{
     static modificar = async (req: Request, res: Response) => {        
         try {
             let id = req.params.id;
-            let {nombre, email/* , password, rol, eliminado */} = req.body;
+            let { nombre, email, rol } = req.body;
     
             let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
             let repo = new UsuarioRepositorio();
@@ -78,6 +78,7 @@ class UsuarioController{
 
             usuario.nombre = nombre; 
             usuario.email = email;
+            usuario.rol = rol;
             usuario.usuarioModificacion = usuarioSesion._id,
             usuario.fechaModificacion = new Date();            
             
