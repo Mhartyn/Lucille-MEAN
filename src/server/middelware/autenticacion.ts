@@ -15,7 +15,7 @@ export const verificaToken = (req: Request, res: Response, next: NextFunction) =
         res.locals.usuarioSesion = <IUsuarioModel>(usuarioSesion.usuario);        
     } catch (error) {
       //If token is not valid, respond with 401 (unauthorized)
-      return res.status(503).json(new Respuesta('Error al crear', error));      
+      return res.status(503).json(new Respuesta('Error al leer token', error));      
     }
 
     //The token is valid for 1 hour
