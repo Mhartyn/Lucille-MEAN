@@ -9,8 +9,8 @@ class UsuarioController{
     static listar = async (req: Request, res: Response) => {
         try {
             let nombre = req.params.nombre;
-            let {pagina, tamanio, orden, direccion} = req.query;    
-            
+            let {pagina, tamanio, orden, direccion} = req.query;
+
             let item = <IUsuarioModel>{
                 nombre: nombre,            
                 eliminado: false
