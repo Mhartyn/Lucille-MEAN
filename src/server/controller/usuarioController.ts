@@ -83,7 +83,6 @@ class UsuarioController{
             usuario.fechaModificacion = new Date();            
             
             let respuesta = await repo.modificar(usuario);
-            
             res.json(new Respuesta('', respuesta, res));
         } catch (err) {
             res.status(503).json(new Respuesta('Error al modificar', err));            

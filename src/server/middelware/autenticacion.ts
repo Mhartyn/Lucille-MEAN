@@ -29,8 +29,8 @@ export const verificaToken = (req: Request, res: Response, next: NextFunction) =
 export const verificaRol = (roles: Array<string>) => {
     return async (req: Request, res: Response, next: NextFunction) => {      
       //Get the user ID from previous midleware
-      const rol = res.locals.usuarioSesion.rol;
-  
+      const {rol, _id} = res.locals.usuarioSesion;
+      
       //Get user role from the database
       /* const userRepository = getRepository(User);
       let user: User;
@@ -40,17 +40,19 @@ export const verificaRol = (roles: Array<string>) => {
         res.status(401).send();
       } */
   
-      let {id} = req.params;
-      let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
-      if (id === usuarioSesion._id) {
+      let {id} = req.params;      
+
+      if (id === _id) {
         next();
       }
+      else{
+        //Check if array of authorized roles includes the user's role
+        if (roles.indexOf(rol) > -1) next();
+        else res.status(401).json({
+            ok: false,
+            err: 'Rol Invalido'
+        });
+      }
 
-      //Check if array of authorized roles includes the user's role
-      if (roles.indexOf(rol) > -1) next();
-      else res.status(401).json({
-          ok: false,
-          err: 'Rol Invalido'
-      });
     };
   };
