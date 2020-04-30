@@ -40,6 +40,12 @@ export const verificaRol = (roles: Array<string>) => {
         res.status(401).send();
       } */
   
+      let {id} = req.params;
+      let usuarioSesion = <IUsuarioModel>res.locals.usuarioSesion;
+      if (id === usuarioSesion._id) {
+        next();
+      }
+
       //Check if array of authorized roles includes the user's role
       if (roles.indexOf(rol) > -1) next();
       else res.status(401).json({

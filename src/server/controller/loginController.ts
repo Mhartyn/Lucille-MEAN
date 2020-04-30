@@ -40,6 +40,7 @@ class LoginController{
             res.json({
                 ok: true,
                 item :usuario,
+                menu: LoginController.opcionesMenu(usuario.rol),
                 token
             });
         } catch (err) {
@@ -108,6 +109,7 @@ class LoginController{
             res.json({
                 ok: true,
                 item: usuario,
+                menu: LoginController.opcionesMenu(usuario.rol),
                 token: tokenNew
             });
         } catch (err) {
@@ -117,6 +119,34 @@ class LoginController{
     /* =============================================================
     ============================FIN GOOGLE===========================
     ============================================================= */
+
+    public static opcionesMenu(rol: string): any{
+        let menu: any = [
+            {
+              titulo: 'Principal',
+              icono: 'mdi mdi-gauge',
+              submenu: [
+                {titulo: 'Dashboard', url: '/dashboard'},
+                {titulo: 'ProgressBar', url: '/progress'},
+                {titulo: 'Grafica', url: '/grafica1'},
+                {titulo: 'Promesas', url: '/promesas'},
+                {titulo: 'RXJS', url: '/rxjs'}
+              ]
+            },
+            {
+              titulo: 'Mantenimientos',
+              icono: 'mdi mdi-folder-lock-open',
+              submenu: [
+                  {titulo: 'Maestros', url: '/maestros'}
+                ]
+            }
+        ];
+        
+        if (rol === 'ADMIN') {            
+            menu[1].submenu.unshift({titulo: 'Usuarios', url: '/usuarios'});
+        }
+        return menu;
+    }
 }
 
 export default LoginController;
