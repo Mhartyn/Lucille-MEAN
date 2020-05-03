@@ -39,7 +39,7 @@ class LoginController{
             
             res.json({
                 ok: true,
-                item :usuario,
+                respuesta: usuario,
                 menu: LoginController.opcionesMenu(usuario.rol),
                 token
             });
@@ -108,7 +108,7 @@ class LoginController{
             
             res.json({
                 ok: true,
-                item: usuario,
+                respuesta: usuario,
                 menu: LoginController.opcionesMenu(usuario.rol),
                 token: tokenNew
             });
