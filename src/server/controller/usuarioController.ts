@@ -16,7 +16,7 @@ class UsuarioController{
                 eliminado: false
             };
     
-            let criterio = new ConsultaModel<IUsuarioModel>(item, Number(pagina),orden,Number(direccion),Number(tamanio));    
+            let criterio = new ConsultaModel<IUsuarioModel>(item, Number(pagina), String(orden),Number(direccion),Number(tamanio));    
             let repo = new UsuarioRepositorio();
             
             let respuesta = await repo.consultar(criterio);    

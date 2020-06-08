@@ -23,3 +23,5 @@ mongoose.connect(process.env.URLDB, {
 server.start(()=>{
     console.log(`Servidor corriendo en el puerto ${port}`);    
 });
+
+export default server.app;

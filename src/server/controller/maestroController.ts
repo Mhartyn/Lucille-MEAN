@@ -18,7 +18,7 @@ class MaestroController{
                 eliminado: false
             };
     
-            let criterio = new ConsultaModel<IMaestroModel>(item, Number(pagina),orden,Number(direccion),Number(tamanio));
+            let criterio = new ConsultaModel<IMaestroModel>(item, Number(pagina), String(orden),Number(direccion),Number(tamanio));
             let repo = new MaestroRepositorio();
         
             let respuesta: any = await repo.consultar(criterio);

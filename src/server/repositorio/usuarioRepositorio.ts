@@ -131,7 +131,7 @@ export default class UsuarioRepositorio extends RepositoryBase<IUsuarioModel> {
     public inicioSesion(email: string) : Promise<IUsuarioModel> {
       let p = new Promise((resolve, reject) => {
         
-        this.findOne(<IUsuarioModel>{email: email, eliminado: false}, 
+        this.findOne(<IUsuarioModel>{email: email}, 
           (err: Error, res: IUsuarioModel) => {
           if (err) {
             reject(err);

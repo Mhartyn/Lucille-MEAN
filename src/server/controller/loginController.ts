@@ -22,7 +22,7 @@ class LoginController{
             }
 
             if (respuesta.google) {
-                return res.status(503).json(new Respuesta('Use inicio sesion por Google', {}));            
+                return res.status(504).json(new Respuesta('Use inicio sesion por Google', {}));            
             }
 
             if (respuesta.eliminado) {

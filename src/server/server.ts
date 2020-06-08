@@ -2,6 +2,7 @@ import loginRouter from './rutas/loginRouter';
 import maestroRouter from './rutas/maestroRouter';
 import usuarioRouter from './rutas/usuarioRouter';
 import archivoRouter from './rutas/archivoRouter';
+import hello from './rutas/hello';
 
 import express = require('express');
 import bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ import fileUpload = require('express-fileupload');
 import path = require('path');
 
 export default class Server{
+    private static instancia: Server;
     public app: express.Application;
     public port: number;
     
@@ -29,6 +31,10 @@ export default class Server{
     }
 
     static init (puerto: number){
+        /* if (this.instancia === null) {
+            this.instancia = new Server(puerto);            
+        } */
+        //return this.instancia;
         return new Server(puerto);
     }
 
@@ -44,6 +50,7 @@ export default class Server{
         this.app.use(maestroRouter);
         this.app.use(usuarioRouter);
         this.app.use(archivoRouter);
+        this.app.use(hello);
         this.publicFolder();
     }    
 }

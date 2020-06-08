@@ -11,10 +11,10 @@ grupoController.get('/maestros/grupos/:nombre', [ verificaToken ], (req: Request
 
     let {pagina, tamanio} = req.query;
     
-    pagina = Number(pagina);
-    tamanio = Number(tamanio);
+    let _pagina = Number(pagina);
+    let _tamanio = Number(tamanio);
 
-    let desde = pagina === 1 ? 0 : (pagina - 1) * tamanio;
+    let desde = _pagina === 1 ? 0 : (_pagina - 1) * _tamanio;
     
     let criterio = {
         nombre: regEx,
@@ -23,7 +23,7 @@ grupoController.get('/maestros/grupos/:nombre', [ verificaToken ], (req: Request
 
     Grupo.find(criterio)
         .skip(desde)
-        .limit(tamanio)        
+        .limit(_tamanio)
         .sort('nombre')
         .populate('usuario', 'nombre email')
         .exec((err, grupos) => {
