@@ -1,8 +1,22 @@
-FROM node:10.15.3-alpine
+FROM node
 
-WORKDIR /home/node/app
-ADD package*.json ./
+# Create app directory
+WORKDIR /usr/src/app
 
-RUN npm i
+COPY package*.json ./
 
-USER node
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+COPY ./dist /usr/src/app
+
+RUN chmod 200 /usr/src/app
+
+EXPOSE 3000
+
+ENV NODE_ENV="docker" 
+
+CMD [ "node", "index.js" ]
+
+#docker run -p 3000 --name luceille -d creepsoftluceille:latest
