@@ -1,0 +1,259 @@
+[{
+  "_id": {
+    "$oid": "5e892d6031fc6219dcf92f79"
+  },
+  "google": false,
+  "rol": "ADMIN",
+  "eliminado": true,
+  "nombre": "martin 07",
+  "email": "user07@hotmail.com",
+  "password": "$2b$04$SX08iGJtRFYVwyZ0ZF3DZejNC.7MR9rt/ZaT60W7cV0bBevK0DzXK",
+  "fechaCreacion": {
+    "$date": "2020-04-05T00:59:13.028Z"
+  },
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-04-27T01:24:03.452Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  },
+  "google": false,
+  "rol": "ADMIN",
+  "eliminado": false,
+  "nombre": "mhartyn adm",
+  "email": "user08@hotmail.com",
+  "password": "$2b$04$zU7kXhJiCeBJt.IkCmTkw.vyP/KB6AtmfW7yZ8KYH30loz9Aoq1tW",
+  "fechaCreacion": {
+    "$date": "2020-04-05T00:59:45.850Z"
+  },
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-05-03T16:07:10.447Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5e892d9031fc6219dcf92f7d"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "nombre": "mhartyn ggm",
+  "email": "user@hotmail.com",
+  "password": "$2b$04$zBbtYd1IXaynSKlNVGub3.7Dtzi5PXHWeCopqqqEyoVZV1rgTYd9O",
+  "fechaCreacion": {
+    "$date": "2020-04-05T01:00:00.346Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e892d9431fc6219dcf92f7e"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "nombre": "mhartyn",
+  "email": "user05@hotmail.com",
+  "password": "$2b$04$EjmL/gTOlwrd4Ltj8E0IpuO88F.wrq9Ez.85vDDGmdvVhTov19VTa",
+  "fechaCreacion": {
+    "$date": "2020-04-05T01:00:04.990Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e892d9c31fc6219dcf92f7f"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "nombre": "mhartyn adm",
+  "email": "user04@hotmail.com",
+  "password": "$2b$04$Y8yoiRuFUp3WsIpUAvCjyOz3kkVfDzpWtf0DHguW5eNKfO22Tfe7u",
+  "fechaCreacion": {
+    "$date": "2020-04-05T01:00:12.328Z"
+  },
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-05-03T05:36:41.323Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5e892da131fc6219dcf92f80"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "nombre": "mhartyn",
+  "email": "user03@hotmail.com",
+  "password": "$2b$04$KvyM7T13l9GCGx/2AkWdBewFCsN6dCeg606hnTmM282OC0sTrk01i",
+  "fechaCreacion": {
+    "$date": "2020-04-05T01:00:17.777Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e892da731fc6219dcf92f81"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "nombre": "mhartyn",
+  "email": "user02@hotmail.com",
+  "password": "$2b$04$CRqDR0xejn/qNu/.MjQ4XOoQq/1L.ahfGPHOWCY1mvueOeMFBYfmS",
+  "fechaCreacion": {
+    "$date": "2020-04-05T01:00:23.363Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e892dad31fc6219dcf92f82"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "nombre": "mhartyn",
+  "email": "user01@hotmail.com",
+  "password": "$2b$04$vIReB2jLJ4lTBHW07BmVIucfqlnrzerRLLLTz.LXxUcn0qHzT8XNG",
+  "fechaCreacion": {
+    "$date": "2020-04-05T01:00:29.406Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e9f7a42c4335758d0243e45"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "fechaCreacion": {
+    "$date": "2020-04-21T22:55:41.268Z"
+  },
+  "nombre": "mhartyn0009",
+  "email": "user000001@hotmail.com",
+  "password": "123456",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e9f7a75c4335758d0243e46"
+  },
+  "google": false,
+  "rol": "USER_ROL",
+  "eliminado": "flase",
+  "fechaCreacion": {
+    "$date": "2020-04-21T22:55:41.268Z"
+  },
+  "nombre": "test",
+  "email": "test@test.com",
+  "password": "123456",
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-04-28T21:40:08.779Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5e9f7dd4ddb4fa5948cf1f4a"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": false,
+  "fechaCreacion": {
+    "$date": "2020-04-21T23:12:02.632Z"
+  },
+  "nombre": "mhartyn009",
+  "email": "user00001@hotmail.com",
+  "password": "$2b$04$vQfbaDcR43kgAkOp7ZIiW..jkWRN.5RyeX/VvgPm5sb1c.HrYNgP2",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5e9f8361e14faf1da8f35703"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": true,
+  "fechaCreacion": {
+    "$date": "2020-04-21T23:26:10.001Z"
+  },
+  "nombre": "test1",
+  "email": "test1@test.com",
+  "password": "$2b$04$r39yn23aCEY/LzUgqTKFpuHtHWOad17b1i8aFCRmFSuf0joX98vou",
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-04-29T04:09:19.095Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5e9f83dde14faf1da8f35705"
+  },
+  "google": false,
+  "rol": "USER_ROL",
+  "eliminado": true,
+  "fechaCreacion": {
+    "$date": "2020-04-21T23:26:10.001Z"
+  },
+  "nombre": "test2",
+  "email": "test2@test.com",
+  "password": "$2b$04$Q4KeF9vamsIs.AZOSkD.Yu8za4fMLBBBvw.yCXjEwLd05lSp7BoM.",
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-04-28T20:36:46.271Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5ea21b630efd44465cc4995a"
+  },
+  "google": false,
+  "rol": "USER",
+  "eliminado": true,
+  "fechaCreacion": {
+    "$date": "2020-04-23T22:48:05.891Z"
+  },
+  "nombre": "mhartyn009",
+  "email": "user00002@hotmail.com",
+  "password": "$2b$04$WI.mRHHFAHYpeKqDYTCpL.WFy.5Tws2oAF6rTScxejvLmCwOu6lkO",
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-04-28T20:39:42.867Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+},{
+  "_id": {
+    "$oid": "5ea36604b42f355518efa004"
+  },
+  "google": true,
+  "rol": "ADMIN",
+  "eliminado": false,
+  "fechaCreacion": {
+    "$date": "2020-04-24T22:19:30.454Z"
+  },
+  "nombre": "Martín Gutiérrez Mendo ",
+  "email": "mhartynpaez@gmail.com",
+  "password": "SIN_CLAVE",
+  "__v": 0,
+  "fechaModificacion": {
+    "$date": "2020-07-15T22:49:51.528Z"
+  },
+  "usuarioModificacion": {
+    "$oid": "5e892d8131fc6219dcf92f7a"
+  }
+}]

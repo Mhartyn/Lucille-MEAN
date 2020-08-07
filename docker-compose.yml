@@ -6,11 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: lucielle
-    volumes:
-      - ./src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
+    #volumes:
+    #  - ./data/app :/usr/src/app
+    #  - ./data :/home/node/app/nodemon.json
     environment:
-      - MONGO_URI="mongodb://root:2020@mdb"
+      - MONGO_URI="mongodb://root:2020@mdb"      
     ports:
       - "8082:3000"
     restart: always
@@ -22,6 +22,8 @@ services:
     image: mongo
     ports:
       - "8081:27017"
+    #volumes:
+    #  - ./data/mongodb :/data/db
     environment:
       - "MONGO_INITDB_ROOT_USERNAME=root"
       - "MONGO_INITDB_ROOT_PASSWORD=2020"

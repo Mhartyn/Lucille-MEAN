@@ -11,7 +11,7 @@ RUN npm install
 
 COPY ./dist /usr/src/app
 
-RUN chmod 200 /usr/src/app
+#RUN chmod 200 /usr/src/app
 
 EXPOSE 3000
 

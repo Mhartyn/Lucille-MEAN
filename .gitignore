@@ -2,3 +2,5 @@ node_modules/
 dist/
 .nyc_output/
 coverage/
+data/app/
+data/mongodb/
