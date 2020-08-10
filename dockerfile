@@ -19,4 +19,8 @@ ENV NODE_ENV="docker"
 
 CMD [ "node", "index.js" ]
 
+#crear la imagen
+#docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
+
+#crear contendor
 #docker run -p 3000 --name luceille -d creepsoftluceille:latest
