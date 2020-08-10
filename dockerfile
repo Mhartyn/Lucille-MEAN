@@ -13,7 +13,7 @@ RUN npm install \
 
 RUN tsc
 
-COPY ./dist /usr/src/app
+COPY . /usr/src/app
 
 RUN chmod 200 /usr/src/app
 
