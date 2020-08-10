@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
+                    docker-compose -f "docker-compose.yml" up -d --build
                     '''
             }
         }
