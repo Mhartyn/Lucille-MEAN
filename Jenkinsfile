@@ -1,9 +1,10 @@
 pipeline {
     agent {
-        docker {
-            image 'node'
-            args '-p 3000:3000'
-        }
+        any
+        //docker {
+        //    image 'node'
+        //    args '-p 3000:3000'
+        //}
     }
     environment {
         CI = 'true'
@@ -12,8 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    npm install
-                    tsc
+                    docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
                     '''
             }
         }
