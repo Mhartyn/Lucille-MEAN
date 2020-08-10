@@ -13,11 +13,9 @@ RUN npm install \
 
 RUN tsc
 
-COPY . .
-#./dist /usr/src/app
+COPY ./dist /usr/src/app
 
-
-#RUN chmod 200 /usr/src/app
+RUN chmod 200 /usr/src/app
 
 EXPOSE 3000
 
