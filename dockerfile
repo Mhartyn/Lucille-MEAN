@@ -3,7 +3,9 @@ FROM node
 # Create app directory
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY ./src ./src
+
+COPY p*.json ./
 
 RUN npm install \
     && npm install tsc -g
@@ -11,9 +13,7 @@ RUN npm install \
 # If you are building your code for production
 # RUN npm ci --only=production
 
-RUN tsc
-
-COPY . /usr/src/app
+RUN tsc => dist
 
 RUN chmod 200 /usr/src/app
 
@@ -21,7 +21,7 @@ EXPOSE 3000
 
 ENV NODE_ENV="docker" 
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "dist/index.js" ]
 
 #crear la imagen
 #docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
