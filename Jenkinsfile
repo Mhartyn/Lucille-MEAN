@@ -13,7 +13,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    tsc
                     docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
                     '''
             }
