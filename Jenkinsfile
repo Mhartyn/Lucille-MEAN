@@ -14,9 +14,9 @@ pipeline {
             steps {
                 sh '''
                     npm install \
-                    && npm install tsc -g
+                    && npm install typescript -g
                     '''
-                sh 'tsc -p (PWD)/tsconfig.json'
+                sh 'tsc -p tsconfig.json'
             }
         }
         //stage('Test') {

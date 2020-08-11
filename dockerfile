@@ -8,12 +8,12 @@ COPY ./src ./src
 COPY *.json ./
 
 RUN npm install \
-    && npm install tsc -g
+    && npm install typescript -g
 
 # If you are building your code for production
 # RUN npm ci --only=production
 
-RUN tsc -p ./tsconfig.json
+RUN tsc -p tsconfig.json
 
 RUN cd /usr/src/app/dist
 RUN ls
