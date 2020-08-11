@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY ./src ./src
 
-COPY p*.json ./
+COPY *.json ./
 
 RUN npm install \
     && npm install tsc -g
@@ -13,7 +13,10 @@ RUN npm install \
 # If you are building your code for production
 # RUN npm ci --only=production
 
-RUN tsc => dist
+RUN tsc
+
+RUN cd /usr/src/app/dist
+RUN ls
 
 RUN chmod 200 /usr/src/app
 
