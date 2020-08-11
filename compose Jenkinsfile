@@ -4,13 +4,13 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Build') {
-            steps {
-                sh '''
-                    docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
-                    '''
-            }
-        }
+        //stage('Build') {
+        //    steps {
+        //        sh '''
+        //            docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
+        //            '''
+        //    }
+        //}
         //stage('Test') {
         //    steps {
         //        sh './jenkins/scripts/test.sh'
@@ -19,7 +19,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh '''
-                   docker run -p 3000 --name luceille -d creepsoftluceille:latest
+                   docker-compose -f "docker-compose.yml" up -d --build
                    '''
             }
         }
