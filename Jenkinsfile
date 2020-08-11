@@ -27,7 +27,7 @@ pipeline {
         stage('BD') {
             steps {
                 sh '''
-                   docker run -p 8082:27017 --network creep-red --name mdb -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=2020 -e MONGO_INITDB_DATABASE=presupuesto -v "./data/mongodb:/data/db" -d mongo
+                   docker run -p 8082:27017 --network creep-red --name mdb -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=2020 -e MONGO_INITDB_DATABASE=presupuesto -v './data/mongodb:/data/db' -d mongo
                    '''
             }
         }
