@@ -24,12 +24,14 @@ pipeline {
         //        sh './jenkins/scripts/test.sh'
         //    }
         //}
-        //stage('Deliver') {
-        //    steps {
-        //        sh '''
-        //           docker run -p 3000 --name luceille -d creepsoftluceille:latest
-        //           '''
-        //    }
-        //}
+        stage('Deliver') {
+            steps {
+                sh '''
+                   set -x
+                   npm run start
+                   set +x
+                   '''
+            }
+        }
     }
 }
