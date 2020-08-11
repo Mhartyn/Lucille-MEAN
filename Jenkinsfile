@@ -3,11 +3,12 @@ pipeline {
     {        
         docker {
             image 'node:10-alpine'
-            args '-p 3000:3000'
+            args '-p 8081:3000'
+            network 'creep-red'
         }
     }
     environment {
-        CI = 'true'
+        MONGO_URI='jenkins'
     }
     stages {
         stage('Build') {
@@ -24,9 +25,16 @@ pipeline {
         //        sh './jenkins/scripts/test.sh'
         //    }
         //}
+        stage('BD'){
+            steps{
+                sh 'docker network create creep-red'
+                sh '''
+                    docker run -p 8082:27017 --network creep-red --name mdb -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=2020 -d mongo --no-cache
+                    '''
+            }
+        }
         stage('Deliver') {
             steps {
-                sh ''
                 sh '''
                    set -x
                    npm run deploy
