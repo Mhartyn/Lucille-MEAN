@@ -26,6 +26,7 @@ pipeline {
         //}
         stage('Deliver') {
             steps {
+                sh 'ls'
                 sh '''
                    set -x
                    npm run deploy
