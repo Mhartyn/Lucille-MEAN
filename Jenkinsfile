@@ -4,7 +4,6 @@ pipeline {
         docker {
             image 'node:10-alpine'
             args '-p 8081:3000'
-            network 'creep-red'
         }
     }
     environment {
@@ -19,7 +18,7 @@ pipeline {
                     '''
                 sh 'tsc -p tsconfig.json'
             }
-        }
+        }    
         //stage('Test') {
         //    steps {
         //        sh './jenkins/scripts/test.sh'
