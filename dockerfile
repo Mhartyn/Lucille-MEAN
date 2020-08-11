@@ -13,7 +13,7 @@ RUN npm install \
 # If you are building your code for production
 # RUN npm ci --only=production
 
-RUN tsc
+RUN tsc -p ./tsconfig.json
 
 RUN cd /usr/src/app/dist
 RUN ls

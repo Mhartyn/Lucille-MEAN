@@ -16,7 +16,7 @@ pipeline {
                     npm install \
                     && npm install tsc -g
                     '''
-                sh 'tsc -p ./tsconfig.json'
+                sh 'tsc -p (PWD)/tsconfig.json'
             }
         }
         //stage('Test') {
