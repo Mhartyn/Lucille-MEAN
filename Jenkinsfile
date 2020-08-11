@@ -1,11 +1,5 @@
 pipeline {
-    agent 
-    {        
-        docker {
-            image 'node'
-            args '-p 3000:3000'
-        }
-    }
+    agent any
     environment {
         CI = 'true'
     }
@@ -13,10 +7,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    npm install \
-                    && npm install typescript -g
+                    docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
                     '''
-                sh 'tsc -p tsconfig.json'
             }
         }
         //stage('Test') {
@@ -26,11 +18,8 @@ pipeline {
         //}
         stage('Deliver') {
             steps {
-                sh 'ls'
                 sh '''
-                   set -x
-                   npm run deploy
-                   set +x
+                   docker run -p 3000 --name luceille -d creepsoftluceille:latest
                    '''
             }
         }
