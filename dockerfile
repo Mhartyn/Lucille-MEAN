@@ -15,9 +15,6 @@ RUN npm install \
 
 RUN tsc -p tsconfig.json
 
-RUN cd /usr/src/app/dist
-RUN ls
-
 RUN chmod 200 /usr/src/app
 
 EXPOSE 3000
