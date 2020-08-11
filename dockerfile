@@ -1,7 +1,10 @@
-FROM node
+FROM node:latest
 
 # Create app directory
 WORKDIR /usr/src/app
+
+RUN npm -v
+RUN node -v
 
 COPY ./src ./src
 
@@ -15,7 +18,7 @@ RUN npm install \
 
 RUN tsc -p tsconfig.json
 
-RUN chmod 200 /usr/src/app
+RUN chmod -x /usr/src/app
 
 EXPOSE 3000
 
@@ -24,7 +27,7 @@ ENV NODE_ENV="docker"
 CMD [ "node", "dist/index.js" ]
 
 #crear la imagen
-#docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "."
+#docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "." --no-cache
 
 #crear contendor
-#docker run -p 3000 --name luceille -d creepsoftluceille:latest
+#docker run -p 3000 --name luceille -d creepsoftluceille:latest --no-cache
