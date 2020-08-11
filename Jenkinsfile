@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh '''
                    set -x
-                   node dist/index
+                   npm run node dist/index
                    set +x
                    '''
             }
