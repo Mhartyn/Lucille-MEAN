@@ -26,7 +26,7 @@ pipeline {
         //    }
         //}
         stage('BD'){
-            agent docker
+            agent any
             steps{
                 sh 'docker network create creep-red'
                 sh '''
