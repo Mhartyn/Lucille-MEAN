@@ -1,26 +1,17 @@
 pipeline {
-    agent 
-    {        
-        docker {
-            image 'node:10-alpine'
-            args '-p 8081:3000'
-        }
-    }
+    agent any
     environment {
-        NODE_ENV='jenkins'
-        NODE_UIR='mongodb://127.0.0.1:27017'
-        PORT='8081'
+        CI = 'true'
     }
     stages {
         stage('Build') {
             steps {
                 sh '''
-                    npm install \
-                    && npm install typescript -g
+                    docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "." --no-cache
                     '''
-                sh 'tsc -p tsconfig.json'
+                sh 'docker network create creep-red'
             }
-        }    
+        }
         //stage('Test') {
         //    steps {
         //        sh './jenkins/scripts/test.sh'
@@ -29,9 +20,14 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh '''
-                   set -x
-                   npm run deploy
-                   set +x
+                   docker run -p 8081:3000 --network creep-red -e MONGO_URI="mongodb://root:2020@mdb" --name luceille -d creepsoftluceille:latest --no-cache
+                   '''
+            }
+        }
+        stage('BD') {
+            steps {
+                sh '''
+                   docker run -p 8082:27017 --network creep-red --name mdb -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=2020 -d mongo --no-cache
                    '''
             }
         }
