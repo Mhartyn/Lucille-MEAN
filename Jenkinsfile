@@ -7,7 +7,8 @@ pipeline {
         }
     }
     environment {
-        MONGO_URI='jenkins'
+        NODE_ENV='jenkins'
+        PORT='8081'
     }
     stages {
         stage('Build') {
