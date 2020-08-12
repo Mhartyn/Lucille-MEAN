@@ -27,7 +27,7 @@ pipeline {
         stage('BD') {
             steps {
                 sh '''
-                   docker run -p $PORTBD:27017 --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
+                   docker run -p $PORTBD:27017 -v data/db:/data/db --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
                    '''
             }
         }
