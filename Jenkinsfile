@@ -8,6 +8,7 @@ pipeline {
     }
     environment {
         NODE_ENV='jenkins'
+        NODE_UIR='mongodb://127.0.0.1:27017'
         PORT='8081'
     }
     stages {
