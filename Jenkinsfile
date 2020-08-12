@@ -20,7 +20,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh '''
-                   docker run -p $PORTAPI:3000 --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USER-BD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
+                   docker run -p $PORTAPI:3000 --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
                    '''
             }
         }
