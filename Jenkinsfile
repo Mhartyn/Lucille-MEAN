@@ -4,6 +4,7 @@ pipeline {
         docker {
             image 'node:10-alpine'
             args '-p 8081:3000'
+            //network 'creep-red'
         }
     }
     environment {
@@ -25,6 +26,7 @@ pipeline {
         //    }
         //}
         stage('BD'){
+            agent docker
             steps{
                 sh 'docker network create creep-red'
                 sh '''
