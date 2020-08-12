@@ -7,15 +7,19 @@ Inicial.init();
 let port: number = <number>(process.env.PORT);
 const server = Server.init(port);   
 
-mongoose.connect(process.env.URLDB, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: true,
-        dbName: 'presupuesto'
-        }).catch(error => console.log(error));
-
-console.log('BD conectada....');                
+try {
+    mongoose.connect(process.env.URLDB, {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+            useFindAndModify: true,
+            dbName: 'presupuesto'
+            }).catch(error => console.log("Error al conectarse con la bd: " + error));
+    
+    console.log('BD conectada....');
+} catch (error) {
+    console.log(error);
+}
 
 server.start(()=>{
     console.log(`Servidor corriendo en el puerto ${port}`);
