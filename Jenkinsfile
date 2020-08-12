@@ -20,14 +20,14 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh '''
-                   docker run -p $PORT-API:3000 --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USER-BD:$PSW@$NAME-BD" --name $NAME-API -d creepsoft/lucille:$BUILD_NUMBER
+                   docker run -p $PORT-API:3000 --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USER-BD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
                    '''
             }
         }
         stage('BD') {
             steps {
                 sh '''
-                   docker run -p $PORT-BD:27017 --network creep-$RED-$BUILD_ID --name $NAME-BD -e MONGO_INITDB_ROOT_USERNAME=$USER-BD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
+                   docker run -p $PORTBD:27017 --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
                    '''
             }
         }
