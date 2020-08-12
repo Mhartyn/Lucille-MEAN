@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "." --no-cache
+                    docker build --pull --rm -f "dockerfile" -t creepsoft/lucille:$BUILD_NUMBER "." --no-cache
                     '''
                 sh 'docker network create creep-red'
             }
@@ -20,7 +20,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh '''
-                   docker run -p 8081:3000 --network creep-red -e MONGO_URI="mongodb://root:2020@mdb" --name luceille -d creepsoftluceille:latest
+                   docker run -p 8081:3000 --network creep-red -e MONGO_URI="mongodb://root:2020@mdb" --name luceille -d creepsoft/lucille:$BUILD_NUMBER
                    '''
             }
         }
