@@ -11,6 +11,11 @@ services:
     volumes:
      # - ./proxy/config:/etc/nginx
       - ./proxy/certs:/etc/ssl/private
+    networks:
+      - nginx_default
+
+networks:
+  nginx_default:
 
 #copiar archivo al contenedor
 #docker cp .\proxy-inverso\proxy\config\lucille.conf reverse:/etc/nginx/conf.d/sites-available/
