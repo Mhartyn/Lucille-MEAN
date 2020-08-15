@@ -13,7 +13,7 @@ services:
       - ./proxy/certs:/etc/ssl/private
 
 #copiar archivo al contenedor
-#docker cp .\proxy-inverso\proxy\config\plex.conf reverse:/etc/nginx/conf.d/sites-available/
+#docker cp .\proxy-inverso\proxy\config\lucille.conf reverse:/etc/nginx/conf.d/sites-available/
 
 #copiar del contendor a una carpeta externa
 #docker cp reverse:/etc/nginx/nginx.conf .\proxy-inverso\proxy\config\nginx.conf
