@@ -20,6 +20,9 @@ networks:
 #copiar archivo al contenedor
 #docker cp .\proxy-inverso\proxy\config\lucille.conf reverse:/etc/nginx/conf.d/sites-available/
 
+#copiar este archivo
+#ln -s ../sites-available/plex.conf .
+
 #copiar del contendor a una carpeta externa
 #docker cp reverse:/etc/nginx/nginx.conf .\proxy-inverso\proxy\config\nginx.conf
 

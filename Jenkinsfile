@@ -21,7 +21,7 @@ pipeline {
             steps {
                 //creep-$RED-$BUILD_ID
                 sh '''
-                   docker run -p $PORTAPI:3000 --network proxy-inverso_nginx_default -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
+                   docker run --network proxy-inverso_nginx_default -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
                    '''
             }
         }
