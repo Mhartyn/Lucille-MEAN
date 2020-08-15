@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  reverse:
+    container_name: reverse
+    hostname: reverse
+    image: nginx
+    ports:
+      - 8083:80
+      - 8084:443
+    volumes:
+     # - ./proxy/config:/etc/nginx
+      - ./proxy/certs:/etc/ssl/private
+
+#copiar archivo al contenedor
+#docker cp .\proxy-inverso\proxy\config\plex.conf reverse:/etc/nginx/conf.d/sites-available/
+
+#copiar del contendor a una carpeta externa
+#docker cp reverse:/etc/nginx/nginx.conf .\proxy-inverso\proxy\config\nginx.conf
+
+#copiar del contendor de regreso
+#docker cp .\proxy-inverso\proxy\config\nginx.conf reverse:/etc/nginx/
+
+#comprobar sintaxis nginx
+#docker exec reverse nginx -t
+
+#reinicar nginx
+#docker exec reverse nginx -s reload

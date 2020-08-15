@@ -4,3 +4,4 @@ dist/
 coverage/
 data/app/
 data/mongodb/
+proxy-inverso/dns/dns-config

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=creepsoft.com #dominio --example
+      - SUBDOMAINS=wildcard,
+      - VALIDATION=dns
+      - DNSPLUGIN=google #proveedor de dominio
+      - EMAIL=mhartynpaez@gmail.com #correo
+      - DHLEVEL=4096
+    volumes:
+      - ./dns-config:/config #ruta del volumnen
+    restart: unless-stopped
