@@ -1,21 +1,21 @@
 version: '3'
 
 services:
-  reverse:
-    container_name: reverse
-    hostname: reverse
+  reverse_1:
+    container_name: reverse_1
+    hostname: reverse_1
     image: nginx
     ports:
-      - 8083:80
-      - 8084:443
-    volumes:
+      - 8085:80
+      - 8086:443
+    #volumes:
      # - ./proxy/config:/etc/nginx
-      - ./proxy/certs:/etc/ssl/private
-    networks:
-      - nginx_default
+     # - ./proxy/certs:/etc/ssl/private
+    #networks:
+    #  - nginx_default
 
-networks:
-  nginx_default:
+#networks:
+#  nginx_default:
 
 #copiar archivo al contenedor
 #docker cp .\proxy-inverso\proxy\config\lucille.conf reverse:/etc/nginx/conf.d/sites-available/

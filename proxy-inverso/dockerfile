@@ -1,0 +1,16 @@
+FROM nginx 
+
+WORKDIR /etc/nginx
+
+COPY ./proxy/config/nginx.conf /etc/nginx/nginx.conf
+
+RUN mkdir /etc/nginx/conf.d/sites-available & \
+    mkdir /etc/nginx/conf.d/sites-enabled
+
+EXPOSE 80 443
+
+COPY ./proxy/config/lucille.conf /etc/nginx/conf.d/sites-available/lucille.conf
+
+RUN ln -s /etc/nginx/conf.d/sites-available/lucille.conf /etc/nginx/conf.d/sites-enabled/lucille.conf
+
+RUN rm /etc/nginx/conf.d/default.conf
