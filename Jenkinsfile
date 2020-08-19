@@ -14,19 +14,21 @@ pipeline {
             }
         }
         stage('Build and Test') {
-            node {
-                checkout scm
-                docker.image('node:10-alpine').withRun('-e "NODE_ENV=jenkins" -e "NODE_UIR=mongodb://$USERBD:$PSW@$NAMEBD" --network creep-$RED-$BUILD_ID') { c ->
-                    sh '''
-                        npm install \
-                        && npm install typescript -g
+            steps {
+                node{
+                    checkout scm
+                    docker.image('node:10-alpine').withRun('-e "NODE_ENV=jenkins" -e "NODE_UIR=mongodb://$USERBD:$PSW@$NAMEBD" --network creep-$RED-$BUILD_ID') { c ->
+                        sh '''
+                            npm install \
+                            && npm install typescript -g
+                            '''
+                        sh 'tsc -p tsconfig.json'
+                        sh '''
+                        set -x
+                        npm run test
+                        set +x
                         '''
-                    sh 'tsc -p tsconfig.json'
-                    sh '''
-                    set -x
-                    npm run test
-                    set +x
-                    '''
+                    }
                 }
             }
             //agent 
