@@ -14,18 +14,7 @@ pipeline {
             }
         }
         stage('Build and Test') {
-            agent 
-            {        
-                docker {
-                    image 'node:10-alpine'
-                    networks 'creep-$RED-$BUILD_ID'
-                }
-            }
-            environment {
-                NODE_ENV='jenkins'
-                NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
-            }
-            steps {
+            docker.image('node:10-alpine').withRun('-e "NODE_ENV=jenkins" -e "NODE_UIR=mongodb://$USERBD:$PSW@$NAMEBD" --network creep-$RED-$BUILD_ID') { c ->
                 sh '''
                     npm install \
                     && npm install typescript -g
@@ -37,6 +26,28 @@ pipeline {
                    set +x
                    '''
             }
+            //agent 
+            //{        
+            //    docker {
+            //        image 'node:10-alpine'                    
+            //    }
+            //}
+            //environment {
+            //    NODE_ENV='jenkins'
+            //    NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
+            //}
+            //steps {
+            //    sh '''
+            //        npm install \
+            //        && npm install typescript -g
+            //        '''
+            //    sh 'tsc -p tsconfig.json'
+            //    sh '''
+            //       set -x
+            //       npm run test
+            //       set +x
+            //       '''
+            //}
         }
         stage('Images Build') {
             agent any
