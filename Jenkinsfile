@@ -18,14 +18,12 @@ pipeline {
             {        
                 docker {
                     image 'node:10-alpine'
+                    networks 'creep-$RED-$BUILD_ID'
                 }
             }
             environment {
                 NODE_ENV='jenkins'
                 NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
-            }
-            networks{
-                creep-$RED-$BUILD_ID
             }
             steps {
                 sh '''
