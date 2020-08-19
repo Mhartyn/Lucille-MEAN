@@ -13,11 +13,25 @@ pipeline {
                 sh 'docker network create creep-$RED-$BUILD_ID'
             }
         }
-        //stage('Test') {
-        //    steps {
-        //        sh './jenkins/scripts/test.sh'
-        //    }
-        //}
+        stage('BD') {
+            steps {
+                sh '''
+                   docker run -p $PORTBD:27017 -v db:/data/db --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
+                   '''
+            }
+        }
+        stage('Test') {
+            steps {
+                sh '''
+                    docker run --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name Test_$NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER /bin/bash & \
+                    set -x
+                    npm run test
+                    set +x
+                    docker stop creepsoft/lucille:$BUILD_NUMBER
+                    docker rm creepsoft/lucille:$BUILD_NUMBER
+                    '''                
+            }
+        }
         stage('Microservicio') {
             steps {                
                 sh '''
@@ -29,13 +43,6 @@ pipeline {
             steps {                
                 sh '''
                     docker run -p $PORTAPI:80 --network creep-$RED-$BUILD_ID --name proxy-inverso -d creepsoft/inverso:$BUILD_NUMBER
-                   '''
-            }
-        }
-        stage('BD') {
-            steps {
-                sh '''
-                   docker run -p $PORTBD:27017 -v db:/data/db --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
                    '''
             }
         }
