@@ -1,45 +1,55 @@
 pipeline {
-    agent any
+    agent none
     environment {
         CI = 'true'
     }
     stages {
-        stage('Build') {
+        stage('Build and Test') {
+            agent 
+            {        
+                docker {
+                    image 'node:10-alpine'
+                }
+            }
             steps {
                 sh '''
-                    docker build --pull --rm -f "dockerfile" -t creepsoft/lucille:$BUILD_NUMBER "." --no-cache
-                    docker build --pull --rm -f "proxy-inverso/dockerfile" -t creepsoft/inverso:$BUILD_NUMBER "." --no-cache
+                    npm install \
+                    && npm install typescript -g
                     '''
+                sh 'tsc -p tsconfig.json'
+                sh '''
+                   set -x
+                   npm run test
+                   set +x
+                   '''
+            }
+        }
+        stage('Images Build') {
+            agent any
+            steps {
+                sh 'docker build --pull --rm -f "dockerfile" -t creepsoft/lucille:$BUILD_NUMBER "." --no-cache'
+                sh 'docker build --pull --rm -f "proxy-inverso/dockerfile" -t creepsoft/inverso:$BUILD_NUMBER "." --no-cache'
                 sh 'docker network create creep-$RED-$BUILD_ID'
             }
         }
-        stage('BD') {
+        stage('Deploy BD') {
+            agent any
             steps {
                 sh '''
                    docker run -p $PORTBD:27017 -v db:/data/db --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
                    '''
             }
-        }
-        stage('Test') {
-            steps {
-                sh '''
-                    docker run --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name Test_$NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER /bin/bash & \
-                    set -x
-                    npm run test
-                    set +x
-                    docker stop creepsoft/lucille:$BUILD_NUMBER
-                    docker rm creepsoft/lucille:$BUILD_NUMBER
-                    '''                
-            }
-        }
-        stage('Microservicio') {
+        }        
+        stage('Deploy Microservicio') {
+            agent any
             steps {                
                 sh '''
                    docker run --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
                    '''
             }
         }
-        stage('Proxy') {
+        stage('Deploy Proxy') {
+            agent any
             steps {                
                 sh '''
                     docker run -p $PORTAPI:80 --network creep-$RED-$BUILD_ID --name proxy-inverso -d creepsoft/inverso:$BUILD_NUMBER
