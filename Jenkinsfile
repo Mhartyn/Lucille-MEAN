@@ -28,7 +28,7 @@ pipeline {
         stage('Proxy') {
             steps {                
                 sh '''
-                    docker run -p 8081:80 --network creep-$RED-$BUILD_ID --name proxy-inverso -d creepsoft/inverso:$BUILD_NUMBER
+                    docker run -p $PORTAPI:80 --network creep-$RED-$BUILD_ID --name proxy-inverso -d creepsoft/inverso:$BUILD_NUMBER
                    '''
             }
         }
