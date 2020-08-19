@@ -43,7 +43,7 @@ describe('Prueba login', () => {
         .post('/login')
         .send({'email': 'user08@hotmail.com', 'password': '12345'})      
         .then(res => {
-          chai.expect(res).to.have.status(503);          
+          chai.expect(res).to.have.status(200);          
         })
     })
 
