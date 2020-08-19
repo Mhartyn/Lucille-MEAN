@@ -24,6 +24,9 @@ pipeline {
                 NODE_ENV='jenkins'
                 NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
             }
+            networks{
+                creep-$RED-$BUILD_ID
+            }
             steps {
                 sh '''
                     npm install \
