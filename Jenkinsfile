@@ -28,28 +28,28 @@ pipeline {
             //        '''                    
             //    }
             //}
-            agent  
-            {        
-                docker {
-                    image 'node:10-alpine'                    
-                }
-            }
-            environment {
-                NODE_ENV='jenkins'
-                NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
-            }
-            steps {
-                sh '''
-                    npm install \
-                    && npm install typescript -g
-                    '''
-                sh 'tsc -p tsconfig.json'
-                sh '''
-                   set -x
-                   npm run test
-                   set +x
-                   '''
-            }
+            //agent  
+            //{        
+            //    docker {
+            //        image 'node:10-alpine'                    
+            //    }
+            //}
+            //environment {
+            //    NODE_ENV='jenkins'
+            //    NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
+            //}
+            //steps {
+            //    sh '''
+            //        npm install \
+            //        && npm install typescript -g
+            //        '''
+            //    sh 'tsc -p tsconfig.json'
+            //    sh '''
+            //       set -x
+            //       npm run test
+            //       set +x
+            //       '''
+            //}
         }       
         stage('Images Build') {
             agent any
