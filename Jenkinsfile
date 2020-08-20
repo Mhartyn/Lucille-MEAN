@@ -7,15 +7,15 @@ pipeline {
         stage('Deploy BD') {
             agent any
             steps {
-                sh 'docker network create creep-params.RED-$BUILD_ID'
+                sh 'docker network create creep-$RED-$BUILD_ID'
                 sh '''
-                   docker run -p params.PORTBD:27017 -v db:/data/db --network creep-params.RED-$BUILD_ID --name params.NAMEBD -e MONGO_INITDB_ROOT_USERNAME=params.USERBD -e MONGO_INITDB_ROOT_PASSWORD=params.PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
+                   docker run -p $PORTBD:27017 -v db:/data/db --network creep-$RED-$BUILD_ID --name $NAMEBD -e MONGO_INITDB_ROOT_USERNAME=$USERBD -e MONGO_INITDB_ROOT_PASSWORD=$PSW -e MONGO_INITDB_DATABASE=presupuesto -d mongo
                    '''
             }
         }
         stage('Build and Test') {
             //steps {
-            //    docker.image('node:10-alpine').withRun('-e "NODE_ENV=jenkins" -e "NODE_UIR=mongodb://params.USERBD:params.PSW@params.NAMEBD" network creep-params.RED-$BUILD_ID') { c ->
+            //    docker.image('node:10-alpine').withRun('-e "NODE_ENV=jenkins" -e "NODE_UIR=mongodb://$USERBD:$PSW@$NAMEBD" network creep-$RED-$BUILD_ID') { c ->
             //        sh '''
             //            npm install \
             //            && npm install typescript -g
@@ -36,7 +36,7 @@ pipeline {
             }
             environment {
                 NODE_ENV='jenkins'
-                NODE_UIR='mongodb://params.USERBD:params.PSW@params.NAMEBD'                
+                NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
             }
             steps {
                 sh '''
@@ -62,7 +62,7 @@ pipeline {
             agent any
             steps {                
                 sh '''
-                   docker run --network creep-params.RED-$BUILD_ID -e MONGO_URI="mongodb://params.USERBD:params.PSW@params.NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
+                   docker run --network creep-$RED-$BUILD_ID -e MONGO_URI="mongodb://$USERBD:$PSW@$NAMEBD" --name $NAMEAPI -d creepsoft/lucille:$BUILD_NUMBER
                    '''
             }
         }
@@ -70,7 +70,7 @@ pipeline {
             agent any
             steps {                
                 sh '''
-                    docker run -p params.PORTAPI:80 --network creep-params.RED-$BUILD_ID --name proxy-inverso -d creepsoft/inverso:$BUILD_NUMBER
+                    docker run -p $PORTAPI:80 --network creep-$RED-$BUILD_ID --name proxy-inverso -d creepsoft/inverso:$BUILD_NUMBER
                    '''
             }
         }
