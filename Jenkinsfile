@@ -28,12 +28,12 @@ pipeline {
             //        '''                    
             //    }
             //}
-            agent 
-            {        
-                docker {
-                    image 'node:10-alpine'                    
-                }
-            }
+            agent any 
+            //{        
+            //    docker {
+            //        image 'node:10-alpine'                    
+            //    }
+            //}
             environment {
                 NODE_ENV='jenkins'
                 NODE_UIR='mongodb://$USERBD:$PSW@$NAMEBD'                
