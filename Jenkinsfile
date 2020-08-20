@@ -28,7 +28,7 @@ pipeline {
             //        '''                    
             //    }
             //}
-            agent any 
+            agent docker 
             //{        
             //    docker {
             //        image 'node:10-alpine'                    
