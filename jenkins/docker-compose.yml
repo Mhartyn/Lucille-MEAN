@@ -2,6 +2,8 @@ version: '3'
  
 services:
   devops:
+    user: root
+    #image: jenkins/jenkins
     image: jenkinsci/blueocean
     volumes:
       - home:/var/jenkins_home
@@ -37,7 +39,7 @@ services:
       
 networks:
   red:
-#    driver: bridge
+    driver: bridge
 
 volumes:
   home:
