@@ -13,7 +13,7 @@ pipeline {
                    '''
             }
         }
-        stage('Build and Test') {
+        //stage('Build and Test') {
             //steps {
             //    docker.image('node:10-alpine').withRun('-e "NODE_ENV=jenkins" -e "NODE_UIR=mongodb://$USERBD:$PSW@$NAMEBD" --network creep-$RED-$BUILD_ID') { c ->
             //        sh '''
@@ -50,7 +50,7 @@ pipeline {
             //       set +x
             //       '''
             //}
-        }       
+        //}       
         stage('Images Build') {
             agent any
             steps {
