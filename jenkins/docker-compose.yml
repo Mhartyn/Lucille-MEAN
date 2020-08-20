@@ -1,8 +1,8 @@
 version: '3'
  
 services:
-  jenkins:
-    image: jenkins
+  devops:
+    image: jenkins/jenkins
     volumes:
       - home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
@@ -11,7 +11,7 @@ services:
     networks:
       - red
   sonarqube:
-    image: sonarqube
+    image: buenaspracticas
     ports:
       - "9000:9000"
     networks:
