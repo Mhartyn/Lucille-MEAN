@@ -49,3 +49,16 @@ volumes:
 #  sonarqube_bundled-plugins:
 #  postgresql:
 #  postgresql_data:
+
+
+##########################################################
+######################## EJECUTAR ########################
+##########################################################
+
+# docker-compose -f docker-compose.yml up -d --build # -> INDICA EL NOMBRE DEL ARCHIVO YML
+# docker-compose up -d --build # -> CONSTRUIR LAS IMAGENES
+# docker-compose up -d # -> EJECUTAR EL YML POR DEFECTO
+
+##########################################################
+###################### FIN EJECUTAR ######################
+##########################################################
