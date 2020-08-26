@@ -17,6 +17,11 @@ spec:
       containers:
       - name: creepsoft-lucille
         image: mhartyn/lucille
+        ports:
+         - containerPort: 3000
+        env:
+          - name: "MONGO_URI"
+            value: "mongodb+srv://creep:2020@cluster0.ourzk.azure.mongodb.net"
         resources:
           requests:
             memory: "256Mi"
