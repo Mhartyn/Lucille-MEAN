@@ -1,0 +1,16 @@
+[
+  {
+    "cloudName": "AzureCloud",
+    "homeTenantId": "d386cad4-ec2d-42a0-942f-80e9bd4694d2",
+    "id": "47a75fda-bcec-45ed-be36-c8c817f61989",
+    "isDefault": true,
+    "managedByTenants": [],
+    "name": "Evaluación gratuita",
+    "state": "Enabled",
+    "tenantId": "d386cad4-ec2d-42a0-942f-80e9bd4694d2",
+    "user": {
+      "name": "MartinGGM@outlook.com",
+      "type": "user"
+    }
+  }
+]

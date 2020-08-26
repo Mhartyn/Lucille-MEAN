@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lucille
+  labels:
+    app: lucille
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: lucille
+  template:
+    metadata:
+      labels:
+        app: lucille
+    spec:
+      containers:
+      - name: creepsoft-lucille
+        image: mhartyn/lucille
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+
+#kubectl exec -it lucille-6b6cf6467b-p7mqt -- /bin/bash    

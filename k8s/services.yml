@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lucilleservicio
+spec:
+  type: LoadBalancer
+  selector:
+    app: lucille
+  ports:
+  - port: 80
+    targetPort: 3000
