@@ -27,4 +27,4 @@ CMD [ "node", "dist/index.js" ]
 #docker build --pull --rm -f "dockerfile" -t creepsoftluceille:latest "." --no-cache
 
 #crear contendor
-#docker run -p 3000 --name luceille -d creepsoftluceille:latest --no-cache
+#docker run -p 3000:3000 --name luceille -e MONGO_URI="mongodb+srv://creep:2020@cluster0.ourzk.azure.mongodb.net" -d creepsoftluceille:latest

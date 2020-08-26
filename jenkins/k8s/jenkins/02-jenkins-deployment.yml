@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: creepdevops
+  labels:
+    app: creepdevops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: creepdevops
+  template:
+    metadata:
+      labels:
+        app: creepdevops
+    spec:
+      containers:
+      - name: jenkins
+        image: jenkinsci/blueocean
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "1000m"
+          limits:
+            memory: "1536Mi"
+            cpu: "1500m"
+#        ports:
+#        - containerPort: 8080
+#        volumeMounts:
+#        - name: jenkinshome
+#          mountPath: /var/jenkins_home
+#      volumes:
+#        - name: jenkinshome
+#          emptyDir: {}
+#        #  azureDisk:
+        #  diskName: jenkins.vhd
+        #  diskURI: https://someaccount.blob.microsoft.net/vhds/test.vhd 
+        #  projected:
+        #    sources:
+        #    - configMap:
+        #        name: jenkins_home-configmap      
+
+#kubectl exec -it creepdevops-6b6cf6467b-p7mqt -- /bin/bash    

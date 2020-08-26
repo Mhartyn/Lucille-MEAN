@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: creepdevops
+  labels:
+    name: creepdevops
+spec:
+  containers:
+  - name: jenkins
+    image: jenkinsci/blueocean
+    resources:
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
+    volumeMounts:
+      - name: jenkinshome
+        mountPath: /var/jenkins_home
+  volumes:
+      - name: jenkinshome
+      #  emptyDir: {}
+    # This GCE PD must already exist.
+    #  azureDisk:
+    #    pdName: my-data-disk
+    #    fsType: ext4
