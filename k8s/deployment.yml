@@ -21,7 +21,7 @@ spec:
          - containerPort: 3000
         env:
           - name: "MONGO_URI"
-            value: "mongodb+srv://creep:2020@cluster0.ourzk.azure.mongodb.net"
+            value: "mongodb+srv://creep:2020@cluster0.ourzk.azure.mongodb.net/presupuesto?retryWrites=true&w=majority"
         resources:
           requests:
             memory: "256Mi"
