@@ -5,6 +5,7 @@ import UsuarioRepositorio from '../repositorio/usuarioRepositorio';
 import Respuesta from '../modelo/interfaces/genericos/iRespuesta';
 import bcrypt from 'bcrypt';
 import {OAuth2Client, TokenPayload} from 'google-auth-library'
+import { Route, Controller, Post, BodyProp } from 'tsoa';
 
 
 class LoginController{
@@ -12,37 +13,11 @@ class LoginController{
         try {
             
             let { email, password } = req.body;
-        
-            let repo = new UsuarioRepositorio();
-    
-            let respuesta: any = await repo.inicioSesion(email);
             
-            if (!respuesta) {
-                return res.status(503).json(new Respuesta('(Usuario) o la contraseña incorrecta', {}));            
-            }
-
-            if (respuesta.google) {
-                return res.status(504).json(new Respuesta('Use inicio sesion por Google', {}));            
-            }
-
-            if (respuesta.eliminado) {
-                return res.status(503).json(new Respuesta('Usuario desactivado', {}));            
-            }
-    
-            let usuario = respuesta
-    
-            if (!bcrypt.compareSync(password, usuario.password)) {
-                return res.status(503).json(new Respuesta('Usuario o la (contraseña) incorrecta', {}));
-            }
-    
-            let token = utils.generaToken(<IUsuarioModel>usuario);
+            let tsoa = new LoginTsoa();
+            let resupesta = await tsoa.login(email, password);
             
-            res.json({
-                ok: true,
-                respuesta: usuario,
-                menu: LoginController.opcionesMenu(usuario.rol),
-                token
-            });
+            res.json(resupesta);
         } catch (err) {
             return res.status(503).json(new Respuesta('Error al iniciar sesion', err));
         }
@@ -146,6 +121,54 @@ class LoginController{
             menu[1].submenu.unshift({titulo: 'Usuarios', url: '/usuarios'});
         }
         return menu;
+    }
+}
+
+@Route('/Login')
+class LoginTsoa extends Controller{
+
+    @Post()
+    public async login (@BodyProp() email: string, password: string): Promise<Respuesta>{
+        try {            
+            let repo = new UsuarioRepositorio();
+    
+            let respuesta: any = await repo.inicioSesion(email);
+            
+            if (!respuesta) {
+                this.setStatus(503);
+                return new Respuesta('(Usuario) o la contraseña incorrecta', {});            
+            }
+
+            if (respuesta.google) {
+                this.setStatus(504);
+                return new Respuesta('Use inicio sesion por Google', {});            
+            }
+
+            if (respuesta.eliminado) {
+                this.setStatus(505);
+                return new Respuesta('Usuario desactivado', {});            
+            }
+    
+            let usuario = respuesta
+    
+            if (!bcrypt.compareSync(password, usuario.password)) {
+                this.setStatus(506);
+                return new Respuesta('Usuario o la (contraseña) incorrecta', {});
+            }
+    
+            let token = utils.generaToken(<IUsuarioModel>usuario);
+            
+            this.setStatus(200);
+            return new Respuesta('',{
+                ok: true,
+                respuesta: usuario,
+                menu: LoginController.opcionesMenu(usuario.rol),
+                token
+            });
+        } catch (err) {
+            this.setStatus(502);
+            return new Respuesta('Error al iniciar sesion', err);
+        }
     }
 }
 
